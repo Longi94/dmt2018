@@ -159,3 +159,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+/assign1/titanic/results/
