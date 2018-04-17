@@ -1,0 +1,218 @@
+,Timestamp,prog,ml,ir,stat,db,gender,choco,birth,neigh,stand,dm,rand,time,gd1,gd2,sleeptime
+0,04/05/2018 11:22,Duisenberg Quantitative Risk Management,no,0,mu,nee,male,neither,10/12/1994,49000,no,0.05,7,1,Productive,Good sleep,1.0
+1,04/05/2018 11:23,Computer Science,no,0,unknown,ja,male,I have no idea what you are talking about,06/08/1993,100,yes,The formmer,394749,1 a m,got a 8.5,got 2 8.5s,1.0
+2,04/05/2018 11:23,Business Analytics,yes,1,sigma,ja,male,neither,25-Dec-92,5,no,Not enough,6,23,Food,Sport,0.0
+3,04/05/2018 11:23,BA,yes,1,mu,ja,male,I have no idea what you are talking about,01/02/1995,2,no,0,8,0.3,-,-,1.0
+4,04/05/2018 11:23,Master Computer Science: Big Data Engineering,no,0,sigma,ja,male,I have no idea what you are talking about,09.01.1994,6,no,0,8,00:00,sleep,beer,1.0
+5,04/05/2018 11:24,Drug discovery and safety,no,0,mu,nee,male,fat,17/08/1994,4,no,100,No,09:00,Chocolate,Doing nothing ,0.0
+6,04/05/2018 11:25,CS,yes,1,mu,nee,male,neither,27/09/1993,5,no,£1,6739,2300,Chocolate,More chocolate,0.0
+7,04/05/2018 11:25,Computational Science,no,0,mu,ja,male,fat,14-May-94,5,yes,0.25,3,12,Sunshine,Friends,1.0
+8,04/05/2018 11:25,M Financial Economtrics,no,0,mu,nee,male,neither,11/04/1931,2,no,"0,25 pond",78952097,1:00 AM,Sun,Rain,1.0
+9,04/05/2018 11:25,MSc Bioinformatics and Systems Biology,yes,1,unknown,ja,male,slim,19/08/1993,7,no,0.3,5,02:00,Free time,More free time,1.0
+10,04/05/2018 11:25,Econometrics,no,0,mu,nee,female,I have no idea what you are talking about,16/05/1990,8,yes,0.003,8,00:00,Good coffee,Sunshine,1.0
+11,04/05/2018 11:26,CS,no,0,mu,ja,female,slim,30/03/1995,6,no,1,42,23.45,Cats,Coffee,0.0
+12,04/05/2018 11:26,Bioinformatics ,yes,0,mu,nee,female,fat,Oct-16,8,no,2,37,0.3,Sunny weather ,Good food ,1.0
+13,04/05/2018 11:26,AI,yes,1,sigma,ja,male,I have no idea what you are talking about,this year,6,no,more,7727528,01:00,Good grades,All grades,1.0
+14,04/05/2018 11:26,EOR,yes,0,mu,nee,male,I have no idea what you are talking about,02-Apr,2,no,99,187,8,Food,Wine,0.0
+15,04/05/2018 11:26,Bioinformatics,no,0,mu,nee,female,fat,05/02/1994,1,no,0.25,7,23:30,Pancakes for breakfast,No wind,0.0
+16,04/05/2018 11:26,BA,yes,1,mu,ja,female,I have no idea what you are talking about,22-Jan,1,yes,100,7,01:30,Sleep,Netflix,1.0
+17,04/05/2018 11:26,BA,yes,1,mu,ja,male,fat,07/10/1994,3,no,80,6,01:00,Sleep,Relax,1.0
+18,04/05/2018 11:26,AI,yes,1,mu,ja,female,fat,23/02/1995,2,no,"0,50",34,23:30,Good sleep,Go to the gym,0.0
+19,04/05/2018 11:26,CS,no,0,mu,ja,male,neither,24/03/1994,1,no,1,7,I didn't,Pizza,Beer,3.0
+20,04/05/2018 11:27,Computational Science,no,0,mu,nee,male,I have no idea what you are talking about,04/01/1996,7,unknown,100/N,6.28E+36,23:59,Pancakes,Pizza,0.0
+21,04/05/2018 11:27,Big Data Engineering,yes,0,mu,ja,male,I have no idea what you are talking about,07/12/1995,2,no,£200,2,23:20,Good foodd,Lot of foodd,0.0
+22,04/05/2018 11:27,AI,yes,1,mu,nee,male,I have no idea what you are talking about,04.11.1992,1,no,70,2,2 a.m.,sex,good food,1.0
+23,04/05/2018 11:27,AI,no,0,mu,nee,female,I have no idea what you are talking about,05/11/1993,5,no,",50",6,23:30,Puppies,sunshine,0.0
+24,04/05/2018 11:27,Computational Science,no,0,mu,nee,female,neither,03-Nov,8,no,0.25,7,23.3,Nice grades,Good food,0.0
+25,04/05/2018 11:27,MSc Computer Science ,no,0,mu,ja,male,fat,21/09/1994,8,unknown,10,4,01:30,Coffee,Good night sleep,1.0
+26,04/05/2018 11:27,BA,yes,1,mu,nee,male,slim,19-Oct,2,no,110,Hoi,23:30,Cheese,Beer,0.0
+27,04/05/2018 11:27,Business Analytics ,yes,1,mu,nee,female,fat,14-Apr,2,no,10,9,22.2,Coffee,Food,0.0
+28,04/05/2018 11:27,AI,yes,1,mu,ja,male,fat,23-Dec,5,no,1234,4,23:30,Food,Coffee,0.0
+29,04/05/2018 11:27,Econometrics,no,0,mu,nee,female,fat,29/10/1991,1,no,01-Apr,3,01:20,Good food,Lovely people,1.0
+30,04/05/2018 11:27,Computational Science,no,0,mu,ja,male,fat,07/11/1991,7,no,110,9.29E+12,23:55,Sunshine,Beer,0.0
+31,04/05/2018 11:27,BA,yes,1,mu,ja,male,I have no idea what you are talking about,15-Feb,4,no,100,5,01:00,Sun,Sun,1.0
+32,04/05/2018 11:27,BA,yes,1,mu,ja,female,I have no idea what you are talking about,03-Oct,0,no,25,3,23:00,Sun,Friends,0.0
+33,04/05/2018 11:27,AI,yes,1,mu,ja,female,I have no idea what you are talking about,14-Jan,3,no,0.3,347,02:00,Nice weather ,Music,1.0
+34,04/05/2018 11:27,21/05/1995,no,0,mu,nee,male,neither,21/05/1995,7,no,0.25€,19,Not,Good food,No alarm,3.0
+35,04/05/2018 11:27,Computer Science: Big Data Engineering,yes,1,mu,ja,male,neither,09-Nov-92,1,no,1,9,01:00,Sun,Freedom,1.0
+36,04/05/2018 11:27,Master Business Analytics ,yes,1,mu,ja,male,fat,1995,0,no,0,1,01:00,Good food ,Good sex ,1.0
+37,04/05/2018 11:27,AI,no,1,mu,ja,female,fat,10/01/1995,5,no,100,2,01:00,good food,enough sleep,1.0
+38,04/05/2018 11:27,AI,yes,1,mu,ja,male,I have no idea what you are talking about,23-14-2030,6.5,no,3,11,01:00,No homework,A blunt,1.0
+39,04/05/2018 11:27,AI,yes,1,mu,nee,female,neither,20-Aug,a lot,no,5,2,01:15,Good weather,No school ,1.0
+40,04/05/2018 11:27,AI premaster,yes,0,mu,nee,male,I have no idea what you are talking about,May,1,no,0,2,Dont know,Snow,Storm,
+41,04/05/2018 11:27,Artificial Intelligence (Socially Aware Computing),yes,1,mu,ja,male,I have no idea what you are talking about,13/06/1993,420,no,99.99,9,01:00,Fun,Relaxation,1.0
+42,04/05/2018 11:27,MSc AI and MSc CLS,yes,1,mu,nee,male,I have no idea what you are talking about,29/01/1996,2,no,6,5,2am,Jezus man,Te diep,1.0
+43,04/05/2018 11:27,MSc Bioinformatics,yes,0,mu,ja,unknown,fat,X,2,no,1,9,22:00,Energy,Smiles,0.0
+44,04/05/2018 11:27,A. I. ,yes,0,mu,nee,male,neither,15/05/1994,5,no,10,32,12.4,Food,Sports,1.0
+45,04/05/2018 11:27,Business Analytics,yes,1,mu,ja,male,I have no idea what you are talking about,27/12/1994,400,no,7,5,23:00,beer,sex,0.0
+46,04/05/2018 11:27,Business Analytics,yes,1,mu,ja,male,fat,10/08/1995,400,no,0.25,4,23:55,Beer,Good food,0.0
+47,04/05/2018 11:27,BA,yes,1,mu,ja,female,fat,25/05/1995,1,no,50,8,23:00,Sun,Free time,0.0
+48,04/05/2018 11:27,System Biology and Bioinformatics,yes,0,mu,nee,female,fat,16/01/1996,0,no,100,4578994211,23,cats,coffee,0.0
+49,04/05/2018 11:27,Business Analytics,yes,1,mu,ja,male,fat,16/10/1994,7,no,100 pound,33,23:15,Sex,Gaming,0.0
+50,04/05/2018 11:27,Exchange,yes,1,mu,ja,male,fat,28,8,no,1,7,1,Weather,Beer,1.0
+51,04/05/2018 11:27,BA,yes,1,mu,ja,male,neither,13/12/1994,4,no,42,7,00:00,Laughing,Sun shining,1.0
+52,04/05/2018 11:27,EOR,no,0,mu,nee,female,fat,04-Apr,7,no,0,4,11:50,Sun,Sea,0.0
+53,04/05/2018 11:27,Big data engineering,no,0,mu,ja,male,neither,15/07/1996,10,no,1,6,01:00,People miding their own business,Nice weather,1.0
+54,04/05/2018 11:27,AI,yes,0,mu,ja,male,I have no idea what you are talking about,30/01/1995,"Either 4 or 8, depends on how you count. Also 1 under and above me.",no,0.001,9,23,Coffee,Pizza,0.0
+55,04/05/2018 11:27,EOR,no,0,mu,nee,male,neither,22/08/1995,4,no,100,3,23:30,Sun ,Food,0.0
+56,04/05/2018 11:27,Finance DHP QRM,no,0,mu,nee,male,fat,17/10/1992,1,no,25c,7,00:30,No assigments,Freedom,1.0
+57,04/05/2018 11:27,BA,yes,1,mu,ja,male,slim,28-Nov-18,8,no,0.999998789,8,01:00,Music,Food,1.0
+58,04/05/2018 11:27,QRM,no,0,mu,nee,male,neither,17/03/1994,2,no,0.3,6,00:15,Saturday,Sunday,1.0
+59,04/05/2018 11:27,Business Analytics,yes,1,mu,ja,female,fat,30/04/1994,6,no,25,8,23:15,Chocolate,Sun,0.0
+60,04/05/2018 11:27,Data Mining Techniques,yes,1,mu,ja,male,neither,16-Jan,430,no,25,7,23:00,-,-,0.0
+61,04/05/2018 11:27,Computational Science ,yes,0,mu,ja,female,fat,20-Jan,3,no,0.05,1,01:00,Enough sleep,Exercise,1.0
+62,04/05/2018 11:27,Business analytics,yes,1,sigma,ja,unknown,fat,20/11/1995,2,yes,90,8,00:00,Wake up time,Chocolate,1.0
+63,04/05/2018 11:27,BA,yes,1,mu,ja,male,fat,09/03/1996,7,no,1,8,23:05,Coffee,Wake-up time,0.0
+64,04/05/2018 11:27,AI,no,1,mu,ja,male,I have no idea what you are talking about,In about two months,2,no,25,18,1,Sunny day,No school,1.0
+65,04/05/2018 11:27,Econometrics ,no,0,mu,nee,male,fat,22/11/1991,3,no,2,2,2:00 AM,Freedom,Money,1.0
+66,04/05/2018 11:27,MSc Artificial Intelligence,yes,1,mu,ja,male,fat,23-Jan,9,no,101,No,01:00,Not coming to VU,Sushi,1.0
+67,04/05/2018 11:27,Bioinformatics and SysBio,yes,1,mu,ja,male,unknown,09/12/1994,2,no,0.3,1,2am,Work,Food,1.0
+68,04/05/2018 11:27,AI,yes,0,mu,ja,female,I have no idea what you are talking about,10/09/1995,2,no,1,7,22,nice weather,coffee,0.0
+69,04/05/2018 11:27,Econometrics,no,0,mu,nee,male,I have no idea what you are talking about,21-Dec,5,no,1,0,early,Fox news,sleep,0.0
+70,04/05/2018 11:27,AI,no,1,mu,unknown,female,I have no idea what you are talking about,28-Jan,1,no,1,7,23:03,sunny weather,pizza,0.0
+71,04/05/2018 11:27,Comoputational science,no,unknown,sigma,nee,female,fat,02-Jul,7,no,0.1,3,23,Sun,Not studying,0.0
+72,04/05/2018 11:27,AI,no,0,sigma,ja,male,I have no idea what you are talking about,30.12.1991,4,no,100,5,23:59,Fun fun fun,A good day,0.0
+73,04/05/2018 11:27,Computational science,no,0,mu,ja,female,slim,05/08/1995,7,no,10,7,01:30,No rain,Food,1.0
+74,04/05/2018 11:27,BA,yes,0,mu,ja,female,fat,27/09/1992,6,no,2,7,22:10,nice food,a lot of fun ,0.0
+75,04/05/2018 11:27,Computational science,no,0,mu,nee,female,slim,08.08.1993,1,no,50€ ?:),1,0.3,Kind people around me ,Coffee,1.0
+76,04/05/2018 11:27,Artificial Intelligence,no,0,sigma,nee,female,neither,10.03.1995,1,no,10,9,01:00,sunshine,good coffee ,1.0
+77,04/05/2018 11:27,Ai,no,0,mu,ja,male,I have no idea what you are talking about,02/09/1990,4,no,5,7,01:15,Bunnies,Good weather,1.0
+78,04/05/2018 11:27,AI,no,0,mu,ja,female,I have no idea what you are talking about,11-Nov,1,no,0.75,8,23:15,Laughs,No stress,0.0
+79,04/05/2018 11:27,Econometrics & Operations Research,no,1,mu,nee,male,fat,31/08/1994,1,no,100,8,12:00,Sun,Lunch,1.0
+80,04/05/2018 11:27,MS,unknown,0,mu,nee,male,neither,05/02/1988,8,no,50,3,23:58,A productive day,A day with company,0.0
+81,04/05/2018 11:27,Business Analytics/ operations research,yes,1,mu,ja,male,neither,19-Apr,7,no,0.456,4,1.12,Food,Good grades,1.0
+82,04/05/2018 11:27,MA Bioinformatics,no,0,sigma,ja,female,fat,05/10/1987,7,no,1,13,01:30,sunshine,beer,1.0
+83,04/05/2018 11:27,Master Human Movement Science,no,0,mu,nee,female,I have no idea what you are talking about,28/05/1992,1,no,0.4,8,00:30,Coffee,Sunshine,1.0
+84,04/05/2018 11:27,BA,yes,0,mu,nee,male,fat,29-Jul,1,no,1,3,2330,Sun,Good food,0.0
+85,04/05/2018 11:27,BA,yes,1,mu,ja,male,I have no idea what you are talking about,27-Mar,1,no,100,4,04:00,Sex,No worries,3.0
+86,04/05/2018 11:27,Finance,no,0,mu,ja,male,fat,03/04/1994,5,no,1,5,01:00,Some food,Netflix,1.0
+87,04/05/2018 11:27,BA,yes,1,mu,ja,male,fat,07/05/1994,6,no,0.25,9,0.3,Food,Sleep,1.0
+88,04/05/2018 11:27,Quantitative Risk Management,no,0,mu,nee,male,fat,28-Jun,5,no,5,7,00:30,Nice weather,Winning the lotery,1.0
+89,04/05/2018 11:27,AI,yes,1,mu,ja,female,neither,27/06/1995,9,no,0.25,5,1:00 AM,Food,Sleep,1.0
+90,04/05/2018 11:27,PhD student at FGB,yes,0,mu,ja,male,fat,02/09/1990,2,no,0.25,3,23:00,Sex,Video games,0.0
+91,04/05/2018 11:27,Bioinformatics and Systems Biology,yes,0,sigma,ja,female,neither,25/12/1994,300,no,20,1,0,Sun,Free time,1.0
+92,04/05/2018 11:27,PhD student,no,0,mu,nee,female,fat,March 30th,0,no,1,6,10.30 pm,sleeping well,sunshine,0.0
+93,04/05/2018 11:27,Bioinformatics and Systems Biology,yes,1,mu,ja,female,neither,21/11/1993,280,no,"0,3",1,23:30,chocolate,nice weather,0.0
+94,04/05/2018 11:27,Bioinformatics ,yes,0,mu,nee,female,fat,12/04/1994,2,no,0.5,8,12,Receiving food,Sun,1.0
+95,04/05/2018 11:27,Business Analytics,yes,1,mu,ja,male,slim,24/08/1992,7,no,85,3,00:30,Sex,Good sleep,1.0
+96,04/05/2018 11:27,CS,no,0,mu,ja,male,slim,07-Nov,6,no,100,2,22:00,Plenty food,Plenty sleep,0.0
+97,04/05/2018 11:27,Bioinformatics & Systems biology,no,0,mu,ja,male,slim,05/02/1990,25,no,100,5,2,Music,Challenge ,1.0
+98,04/05/2018 11:27,Econometrics,yes,1,mu,ja,male,I have no idea what you are talking about,09/09/1994,1,no,100,7,23:30,Mac Donalds,A good sleep,0.0
+99,04/05/2018 11:27,CS,yes,0,mu,ja,male,neither,Sep-18,10,no,100,7,2,Achieving something,Learning something,1.0
+100,04/05/2018 11:27,BA,yes,1,mu,ja,male,I have no idea what you are talking about,17-Aug,1,no,10,2,23:00,Sun,Sleep,0.0
+101,04/05/2018 11:27,MSc Econometrics,no,0,mu,nee,female,I have no idea what you are talking about,2 februari,4,no,1,1,22.3,coffee,laughter,0.0
+102,04/05/2018 11:27,Computer Science: Big Data Engineering,no,0,mu,ja,male,fat,19th June,5,yes,10,9,2am,The Sun,No stress,1.0
+103,04/05/2018 11:27,AI,yes,0,mu,nee,female,I have no idea what you are talking about,22/12/1993,3,no,1,8,22:45,Sunshine,Coffee,0.0
+104,04/05/2018 11:27,CS,yes,1,mu,ja,male,fat,11/06/1993,10,no,40,8,23:00,Good food,A good nice sleep,0.0
+105,04/05/2018 11:27,MSc Computational Science (Joint Degree),yes,1,mu,nee,male,neither,17/05/1994,6,no,20,7,1:30 AM,Coffee,Finishing some work,1.0
+106,04/05/2018 11:27,AI,yes,1,mu,nee,male,neither,15/10/1993,5,no,0.5,8,24:00:00,"Sun, music, friends, beer",Coffee,1.0
+107,04/05/2018 11:27,Bioinformatics and Systems Biology ,yes,0,sigma,nee,female,slim,20/02/1995,2,no,5,33,12,Good sleep,Nice food,1.0
+108,04/05/2018 11:27,AI (Cognitive Sciences),no,0,mu,nee,male,neither,17/03/1992,6,no,undefined,7.44,1,Saturday,Sunday,1.0
+109,04/05/2018 11:27,Big data engineering,no,0,mu,ja,male,neither,14.10.1992,1,no,100/n,46371646292,01:48,Good fuckin breakfast,Completing my task,1.0
+110,04/05/2018 11:27,AI,no,1,mu,ja,female,neither,1991,1,no,1,9,3,Sunny weather,no work appointments,3.0
+111,04/05/2018 11:27,Bioinformatics and Systems Biology,yes,0,mu,nee,male,fat,10/09/1996,4,no,0.5,2,02:00,Good weather,No lectures,1.0
+112,04/05/2018 11:27,Econometrics,no,0,mu,nee,male,fat,19/09/1993,4,no,0.33,8,1.3,Chocolate,Flying,1.0
+113,04/05/2018 11:27,AI,yes,1,mu,ja,female,I have no idea what you are talking about,September 9th,6,no,50,9,23.14,If the sun shines,If I got up with the correct leg,0.0
+114,04/05/2018 11:27,Computational Science,yes,1,mu,ja,male,slim,26/01/1994,6,unknown,£100 / 400,3,00:45,Sun,Friends,1.0
+115,04/05/2018 11:27,Business analytics,yes,0,mu,nee,female,fat,24/11/1995,1,no,75,9,01:00,Sun,Good food,1.0
+116,04/05/2018 11:27,AI (VU version),no,0,mu,nee,male,neither,03/09/1994,4,no,27,8,2:00 AM,Relief,Future plans being solid,1.0
+117,04/05/2018 11:27,Msc Artificial intelligence,yes,1,mu,ja,male,I have no idea what you are talking about,09-Nov,3,yes,100,6.9,01:00,Sex,Drugs,1.0
+118,04/05/2018 11:27,BA,yes,0,mu,nee,male,neither,30/12/1992,300,no,"0,3",9,23:30,Wake up without A alarm,Going to the gym,0.0
+119,04/05/2018 11:27,Computational Science,no,0,mu,nee,male,I have no idea what you are talking about,18/02/1994,7,no,10,75389275660,23:30,Sports,Being productive,0.0
+120,04/05/2018 11:27,cs,no,0,sigma,nee,male,slim,22/05/1996,2,unknown,0.37,9,23.16,Good food,fast train,0.0
+121,04/05/2018 11:27,BA,yes,1,mu,ja,female,fat,13/09/1995,7,no,"0,25",8,23:00,Nice weather,Coffe,0.0
+122,04/05/2018 11:27,AI,yes,1,sigma,nee,male,I have no idea what you are talking about,26/03/1993,8,yes,1,7,12:30am,Finish my daily tasks,Watch a movie,1.0
+123,04/05/2018 11:27,AI,yes,1,sigma,ja,female,fat,15.11,8,no,50,7,0.25,no rain,sun,1.0
+124,04/05/2018 11:27,CLS,yes,0,mu,nee,male,neither,04/04/1990,8,no,0,4,11:49,sun,good food,0.0
+125,04/05/2018 11:27,AI,no,1,mu,nee,male,I have no idea what you are talking about,19/04/1989,7,no,100/400,9,23:45,Getting my salary,Bike not braking down,0.0
+126,04/05/2018 11:27,MPA,no,0,mu,nee,male,neither,04/06/1992,4,no,100,4,11pm,sunny weather,no obligations,0.0
+127,04/05/2018 11:27,CS,yes,1,mu,ja,male,fat,05.04.1995,8,no,80,6,0.3,Sunny weather ,Good food,1.0
+128,04/05/2018 11:27,bioinformatics,yes,0,sigma,nee,male,fat,22/09/1988,9,no,1,7,2359,good dinner,assignmeny done,0.0
+129,04/05/2018 11:27,AI,yes,1,sigma,nee,male,fat,14/03/1981,20,no,100,1,00:30,Get some good sleep,Get satisfaction at work,1.0
+130,04/05/2018 11:27,Computational Science (JD),yes,0,mu,nee,male,neither,31/12/1993,3,no,0.25,8,02:00,Friendly encounters,Good coffee,1.0
+131,04/05/2018 11:27,Bioinformatics & System Biology,yes,0,mu,nee,female,neither,11/02/1996,1,no,£0.25,2,4.40 AM,Morning tea,Getting to bed early,3.0
+132,04/05/2018 11:27,Bioinformatics,yes,0,mu,nee,male,fat,20/03/1995,2,no,0.25,10,12:20,Good dinner,Friends,1.0
+133,04/05/2018 11:27,AI,yes,1,mu,nee,female,fat,19-May,1,no,1/amount of people ,22,02:00,Seeing friends,sun,1.0
+134,04/05/2018 11:27,AI,no,0,mu,unknown,female,I have no idea what you are talking about,8,1,no,"12,34",8,06:00,Nothing,"Nothing, I hate life",3.0
+135,04/05/2018 11:27,OR,no,0,mu,nee,male,neither,10/12/1995,8,no,0.25,123581321,23:45,Sports,Good dinner,0.0
+136,04/05/2018 11:27,EOR,yes,1,mu,nee,male,fat,23/10/1994,10,no,100,1987,0.35,Achievement,Relaxation,1.0
+137,04/05/2018 11:27,Business Analytics,no,0,mu,nee,female,neither,18/02/1993,1,no,10,4,23:30,Tasty food,Being with my friends,0.0
+138,04/05/2018 11:27,Mathematics Exchange,yes,0,mu,nee,male,neither,June 17th,5,no,100,10,1.3,Productivity,Decent dinner,1.0
+139,04/05/2018 11:27,BA,yes,1,mu,ja,male,neither,02/09/1996,1,no,£5,1,00:00,Sleep,Good news,1.0
+140,04/05/2018 11:27,Bioinformatics and systems biology,no,0,sigma,nee,female,neither,24/04/1995,2,no,10,10,00:00,Sunny day,Meeting with friends,1.0
+141,04/05/2018 11:27,CS,no,0,mu,ja,male,I have no idea what you are talking about,29.03,3,no,25,7,3,Food,Football,3.0
+142,04/05/2018 11:27,Econometrics,no,0,sigma,nee,male,fat,23/06/1994,7,no,1,4,11:30,Succeed in dayly goal,Noting to do,0.0
+143,04/05/2018 11:27,AI,yes,0,mu,nee,male,I have no idea what you are talking about,25/10/1990,4,no,15,1,23,Coffee,Sunshine,0.0
+144,04/05/2018 11:27,BA,yes,1,mu,ja,unknown,neither,06/09/1994,1,no,0.25,6,23:30,No school/work,Sex,0.0
+145,04/05/2018 11:27,AI,no,0,mu,nee,female,I have no idea what you are talking about,16/01/1995,2,no,"0,4",7,03:00,Friends,Weather,3.0
+146,04/05/2018 11:27,BA,yes,0,mu,ja,female,fat,13/06/1994,2,no,5,7,23:00,sun,free day,0.0
+147,04/05/2018 11:27,BA,yes,1,mu,ja,male,I have no idea what you are talking about,24-Apr,6,no,0.4,9,1.15,Sports,Drinks,1.0
+148,04/05/2018 11:27,Bioinformatics,no,0,mu,ja,male,fat,14/12/1995,6,no,1,8,12,Rest,Goos food,1.0
+149,04/05/2018 11:27,Quantitative risk management,no,0,mu,nee,male,neither,24.05.1993,2,no,5,1,01:30,Na,Na,1.0
+150,04/05/2018 11:27,Msc Computational science,yes,0,mu,ja,female,fat,12/07/1990,7,yes,2£,2,01:15,Dance,Productive,1.0
+151,04/05/2018 11:27,Business Analytics Msc,yes,1,mu,ja,male,I have no idea what you are talking about,18/01/1997,5,unknown,100,7,00:30,Sunshine,Good food,1.0
+152,04/05/2018 11:27,MS,unknown,0,mu,nee,male,neither,05/02/1988,8,no,50,3,23:58,A productive day,A day with company,0.0
+153,04/05/2018 11:27,Msc. Bioinformatics and Systems Biology,no,0,sigma,nee,male,fat,06/11/1992,2,no,1,537,02:30,Food,Chocolate,1.0
+154,04/05/2018 11:27,AI,no,0,mu,nee,male,neither,07/03/1995,6,no,"0,25",6,23:45,Fun,Nice food,0.0
+155,04/05/2018 11:27,AI,yes,1,mu,ja,male,I have no idea what you are talking about,31/07/1992,4,no,90,1,02:00,Sleeping in,Staying up late,1.0
+156,04/05/2018 11:27,Business Analytics,yes,0,mu,ja,male,fat,1-10-1768,>300,no,100 + interest ,"rnorm(n = 1, mu = 12, sigma = 1)",10:00pm,having a good sleep,some free time,0.0
+157,04/05/2018 11:27,Quantitative Risk Management,unknown,0,mu,nee,male,neither,1994,0,no,50,3,11,good weather,free time,0.0
+158,04/05/2018 11:27,Computer Science,no,0,mu,ja,female,I have no idea what you are talking about,12/10/1991,A lot ,no,100,3,3:00 AM,Good food,No stress,3.0
+159,04/05/2018 11:27,AI,yes,1,mu,ja,male,fat,02/07/1993,7,no,20,7,01:34,Coffee,Sunshine,1.0
+160,04/05/2018 11:27,QRM,no,0,mu,nee,male,I have no idea what you are talking about,03/12/1993,0,no,14,4,3.3,Coffee,Sunny day,3.0
+161,04/05/2018 11:27,Bioinformatics and systems biology,yes,0,mu,nee,male,I have no idea what you are talking about,18/09/1991,6,no,1,8,12,Sunshine,Breakfast,1.0
+162,04/05/2018 11:27,Bioinformatcis,yes,0,sigma,nee,male,neither,23/01/1994,6,no,0.25,4,01:30,No responsibilities,sleeping in,1.0
+163,04/05/2018 11:27,business analytics,no,0,mu,nee,male,fat,12/10/1994,315,no,1,10,1AM,Playing football,Meeting awesome people,1.0
+164,04/05/2018 11:27,Master Econometrics & Operations Research,yes,1,mu,ja,male,fat,05/11/1990,24,no,5,8,1:00 AM,Sex,Asian food,1.0
+165,04/05/2018 11:27,Exchange,yes,0,unknown,ja,female,neither,01/06/1994,6,no,20,1,23:30,Things to do,Not too much to do,0.0
+166,04/05/2018 11:27,BA,yes,0,mu,nee,male,neither,4071991,6,no,0.25,8,24,sleeping,weather,1.0
+167,04/05/2018 11:27,PhD,no,0,mu,nee,male,neither,01/03/1995,2,no,0.25,7,23:30,Nice food,Good sleep,0.0
+168,04/05/2018 11:27,Bioinformatics and Systems Biology ,no,0,mu,nee,male,fat,02/03/1996,6,no,10,2,23:30,Good sleep,Good food,0.0
+169,04/05/2018 11:27,MSC Bioinformatics,yes,0,mu,nee,female,neither,05/08/1987,2,no,£1,7,00:13,Sunshine,Having the house quiet ehrn i wake up,1.0
+170,04/05/2018 11:28,"B Science, Business & Innovation",no,0,unknown,ja,male,neither,25/02/1994,2,no,0.5,6,23:45,Waking up not tired,Have nothing to do,0.0
+171,04/05/2018 11:28,Economics,no,0,mu,nee,female,neither,28.03.1995,2,no,0.25,7,23:00,A,B,0.0
+172,04/05/2018 11:28,Computational Science,no,0,mu,nee,male,neither,27/01/1995,8,no,52.6,4,10.30 pm,Free cheese,Good coffee,0.0
+173,04/05/2018 11:28,Duisenberg Honors Program Quantitative Risk Managament,no,0,mu,nee,male,neither,10-Sep,8,no,5,6,00:30,Success,Food,1.0
+174,04/05/2018 11:28,AI,yes,0,mu,ja,male,neither,09.07.1994,1,no,1,10,12,Having slept well,Getting work done,1.0
+175,04/05/2018 11:28,Master Econometrics and operations research,yes,1,mu,ja,unknown,I have no idea what you are talking about,18-May,8,unknown,1,3,23,Free time,Not it being bad,0.0
+176,04/05/2018 11:28,CLS,yes,1,mu,ja,male,neither,25/10/1996,1,no,101,4,03:20,Pizza,Seeing you *kiss*,3.0
+177,04/05/2018 11:28,AI,yes,1,mu,ja,male,neither,11/02/1994,7,no,1,3,03:00,Beer,Exercise,3.0
+178,04/05/2018 11:28,Business Analytics ,no,0,mu,nee,male,I have no idea what you are talking about,15/08/1995,2,no,101,2,23:15,Holiday,Food ,0.0
+179,04/05/2018 11:28,Quantitative Risk Management,no,0,mu,nee,male,neither,12/09/1996,1,no,"£0,5",9,01:30,No time series assignment,.,1.0
+180,04/05/2018 11:28,CS,no,1,mu,nee,male,fat,11/08/1992,2,no,1,8,1,good food,new experiences,1.0
+181,04/05/2018 11:28,Econometrics,no,0,mu,unknown,female,fat,23/12/1991,1,no,4,7,1,Me-Time,Productivity,1.0
+182,04/05/2018 11:28,Master Bionformatics and Systems Biology,yes,0,mu,nee,female,I have no idea what you are talking about,13/06/1993,4,no,5,3,02:00,Not having to get up early,sushi,1.0
+183,04/05/2018 11:28,Computational Science,yes,0,mu,ja,male,neither,26.06,5,no,$0.25,9, 1 a.m.,Sunny,Food,1.0
+184,04/05/2018 11:28,AI,no,0,mu,nee,male,neither,12/02/1993,3,no,3,7,2:00 AM,No alarm in the morning,Good and sunny weather,1.0
+185,04/05/2018 11:28,CSL,no,1,mu,nee,male,neither,10-Apr,3,no,1,42,22.3,waking up well rested,get fast asleep quickly,0.0
+186,04/05/2018 11:28,PhD,no,0,mu,nee,male,neither,01/03/1995,2,no,0.25,7,23:30,Nice food,Good sleep,0.0
+187,04/05/2018 11:28,Artificial intelligence ,no,unknown,mu,unknown,female,neither,25/08/1996,0,no,1euro,3,0,Food,Not having Anything to do,1.0
+188,04/05/2018 11:28,BA,yes,0,mu,nee,male,fat,07/07/1992,3,no,5,4,01:30,Sleep,Sports,1.0
+189,04/05/2018 11:28,Masters Computer Science(big data engineering),no,1,mu,ja,male,I have no idea what you are talking about,02/04/1995,6,no,100/n,9,12,Cloudy skies  ,Memes ,1.0
+190,04/05/2018 11:28,Computational Science,yes,0,mu,nee,male,neither,17-Nov,3,no,1,10,01:00,afternoon lectures,weekend,1.0
+191,04/05/2018 11:28,BA,yes,0,mu,nee,male,fat,01/09/1994,3,yes,200,1,00:00,Food,No college,1.0
+192,04/05/2018 11:28,BA,yes,1,mu,ja,female,fat,23/02/1995,5,no,30,9,23:30,Getting a good grade,Sleep well,0.0
+193,04/05/2018 11:28,Econometrics,no,0,mu,unknown,male,fat,02/09/1993,1,no,0.25,2,00:30,nice weather,fun time,1.0
+194,04/05/2018 11:28,Computational Science,yes,0,mu,nee,male,I have no idea what you are talking about,07/06/1993,4,yes,"0,33",42,23:15,No lecture at 9,No lectures,0.0
+195,04/05/2018 11:28,Computer Science,yes,1,mu,ja,male,fat,01-Dec,5,no,0.4,69,02:30,Morning sex,Going to the gym,1.0
+196,04/05/2018 11:28,Business Analytics,yes,0,mu,ja,female,neither,19/03/1993,4,no,100/300,9,00:00,Good sleep,Free time ,1.0
+197,04/05/2018 11:28,Bioinformatics master,yes,0,sigma,nee,female,neither,?,04-Aug,no,5,8,22:00,good weather,Achievement,0.0
+198,04/05/2018 11:28,Mathematics,no,0,mu,nee,female,I have no idea what you are talking about,24/09/1996,7,no,5,7,23:00,A good sleep,Be around nice people,0.0
+199,04/05/2018 11:28,Bioinformatics and Systems biology,no,0,mu,ja,male,I have no idea what you are talking about,02/05/1996,7,no,3,3,12,Good night rest,No compile errors on first try,1.0
+200,04/05/2018 11:28,OR,no,0,mu,nee,male,neither,1995,3,no,10,ACHT,0,Sports,Chocolate,1.0
+201,04/05/2018 11:28,Computational Science,yes,unknown,mu,ja,male,neither,1990,1,no,80,4,300,productivity,no pain,3.0
+202,04/05/2018 11:28,Bioinformatics & Systems Biology,no,0,mu,nee,male,fat,26/11/1993,1,no,5,382763,23,Good sleep,Cheese,0.0
+203,04/05/2018 11:28,AI,yes,0,mu,ja,male,fat,18/08/1994,1,no,20,7,23:00,Coffee,Music,0.0
+204,04/05/2018 11:28,AI VU ,no,0,mu,nee,male,fat,30/12/1990,5,no,50,6,3am,Good sleep,Sports,3.0
+205,04/05/2018 11:28,Computational Science,yes,0,sigma,nee,male,neither,August 7th,2,no,0,4,04:30,1,2,
+206,04/05/2018 11:28,Business Analytics ,yes,1,sigma,ja,male,unknown,05/04/2000,400,unknown,1.00E+24,7,04:00,Guest lecture by Tupac,0 heart attacks,3.0
+207,04/05/2018 11:28,Cls,no,0,sigma,nee,male,slim,25/12/1991,7,no,0.34,7,02:00,Temptation Island,Sun,1.0
+208,04/05/2018 11:28,QRM,no,0,mu,ja,male,I have no idea what you are talking about,18-Mar,1,no,5,3,0,"Sunshine, structure ","Following 4 courses at the same time, rain",1.0
+209,04/05/2018 11:29,MSc Bioinformatics and Systems Biology,yes,0,mu,nee,female,neither,24/10/1993,1,no,£.25,5,01:05,A good book,Nice people,1.0
+210,04/05/2018 11:29,Ai,yes,1,mu,ja,male,I have no idea what you are talking about,09/02/1993,6,no,50,9,3 3,Hanging out,Sex,3.0
+211,04/05/2018 11:30,Artificial Intelligence,no,0,mu,nee,male,slim,09-Nov,2,unknown,0.50 euros,6123,23.3,food,friends,0.0
+212,04/05/2018 11:38,Econometrics ,no,0,mu,nee,male,fat,22/11/1991,3,no,2,2,2:00 AM,Freedom,Money,1.0
+213,04/05/2018 12:10,AI,no,0,unknown,unknown,female,neither,20/05/1993,7,unknown,0,88,22.47,Sun,Activities,0.0
+214,04/05/2018 13:15,AI,yes,1,mu,nee,male,fat,30/07/1992,8,no,11,2,04:00,The foresight of a night out with friends,The taste of that first sip of cold beer on a hot summer day,3.0
+215,04/05/2018 15:09,Physics,no,1,mu,nee,male,neither,04/12/1991,5,no,about 0.4£ for N=250,10,01:30,Good company,Well rested and structured,1.0
+216,04/05/2018 18:04,BA,yes,1,mu,ja,male,fat,07/10/1994,3,no,80,6,01:00,Sleep,Relax,1.0
