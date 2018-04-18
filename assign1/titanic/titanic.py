@@ -17,6 +17,10 @@ from sklearn.tree import DecisionTreeClassifier
 
 pd.set_option('display.width', 1000)
 
+sex_mapping = {'female': 1, 'male': 0}
+port_mapping = {'S': 0, 'C': 1, 'Q': 2}
+title_mapping = {"Mr": 1, "Miss": 2, "Mrs": 3, "Master": 4, "Rare": 5}
+
 
 def main():
     # reading the data
@@ -65,7 +69,7 @@ def print_preview(df):
 # sex to ordinal
 def sex_to_ordinal(combine):
     for dataset in combine:
-        dataset['Sex'] = dataset['Sex'].map({'female': 1, 'male': 0}).astype(int)
+        dataset['Sex'] = dataset['Sex'].map(sex_mapping).astype(int)
 
 
 def fill_fare(train_df, test_df):
@@ -117,7 +121,6 @@ def create_title(combine):
         dataset['Title'] = dataset['Title'].replace('Mme', 'Mrs')
 
     # title to ordinal
-    title_mapping = {"Mr": 1, "Miss": 2, "Mrs": 3, "Master": 4, "Rare": 5}
     for dataset in combine:
         dataset['Title'] = dataset['Title'].map(title_mapping)
         dataset['Title'] = dataset['Title'].fillna(0)
@@ -195,8 +198,8 @@ def create_child(combine):
 def create_mother(combine):
     for dataset in combine:
         dataset['Mother'] = 0
-        dataset.loc[(dataset['Child'] == 0) & (dataset['Parch'] > 0) & (dataset['Sex'] == 1) &
-                    (dataset['Title'] != 2), 'Mother'] = 1
+        dataset.loc[(dataset['Child'] == 0) & (dataset['Parch'] > 0) & (dataset['Sex'] == sex_mapping['female']) &
+                    (dataset['Title'] != title_mapping['Miss']), 'Mother'] = 1
 
 
 def train_models(train_df, test_df):
