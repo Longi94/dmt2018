@@ -3,7 +3,6 @@ import os
 
 # data analysis and wrangling
 import pandas as pd
-import numpy as np
 
 # machine learning
 from sklearn.linear_model import LogisticRegression
@@ -133,30 +132,23 @@ def create_title(combine):
 
 
 def fill_age(combine):
-    # TODO build model to predict age
-    # guess the age for passengers with missing value
-    guess_ages = np.zeros((2, 3))
+    x_age_train = combine[0].loc[combine[0]["Age"].notnull()].drop("Age", axis=1)
+    y_age_train = combine[0].loc[combine[0]["Age"].notnull()]["Age"].astype(int)
+
+    print("Training Decision Tree model for predicting age...")
+    print(x_age_train.info())
+    decision_tree = DecisionTreeClassifier()
+    decision_tree.fit(x_age_train, y_age_train)
+
     for dataset in combine:
-        for i in range(0, 2):
-            for j in range(0, 3):
-                guess_df = dataset[(dataset['Sex'] == i) &
-                                   (dataset['Pclass'] == j + 1)]['Age'].dropna()
-
-                # age_mean = guess_df.mean()
-                # age_std = guess_df.std()
-                # age_guess = rnd.uniform(age_mean - age_std, age_mean + age_std)
-
-                age_guess = guess_df.median()
-
-                # Convert random age float to nearest .5 age
-                guess_ages[i, j] = int(age_guess / 0.5 + 0.5) * 0.5
-
-        for i in range(0, 2):
-            for j in range(0, 3):
-                dataset.loc[(dataset.Age.isnull()) & (dataset.Sex == i) & (dataset.Pclass == j + 1),
-                            'Age'] = guess_ages[i, j]
-
+        x_age_test = dataset.drop("Age", axis=1).copy()
+        model_decision_tree = decision_tree.predict(x_age_test)
+        dataset['PredictedAge'] = model_decision_tree
+        dataset.loc[dataset['Age'].isnull(), 'Age'] = dataset['PredictedAge']
         dataset['Age'] = dataset['Age'].astype(int)
+
+    combine[0] = combine[0].drop(['PredictedAge'], axis=1)
+    combine[1] = combine[1].drop(['PredictedAge'], axis=1)
 
 
 def band_age(combine):
