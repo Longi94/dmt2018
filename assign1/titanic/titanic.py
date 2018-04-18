@@ -29,8 +29,8 @@ def main():
     combine = [train_df, test_df]
 
     # drop ticket and cabin
-    combine[0] = combine[0].drop(['Ticket', 'Cabin'], axis=1)
-    combine[1] = combine[1].drop(['Ticket', 'Cabin'], axis=1)
+    combine[0] = combine[0].drop(['Ticket'], axis=1)
+    combine[1] = combine[1].drop(['Ticket'], axis=1)
 
     print('Original data:')
     print_preview(combine[0])
@@ -42,6 +42,8 @@ def main():
 
     fill_embarked(combine)
     embarked_to_ordinal(combine)
+
+    transform_cabin(combine)
 
     create_title(combine)
 
@@ -200,6 +202,13 @@ def create_mother(combine):
         dataset['Mother'] = 0
         dataset.loc[(dataset['Child'] == 0) & (dataset['Parch'] > 0) & (dataset['Sex'] == sex_mapping['female']) &
                     (dataset['Title'] != title_mapping['Miss']), 'Mother'] = 1
+
+
+def transform_cabin(combine):
+    for dataset in combine:
+        dataset.loc[dataset.Cabin.notnull(), 'Cabin'] = dataset['Cabin'].astype(str).str[0].apply(lambda x: ord(x)) \
+                                                        - ord('A') + 1
+        dataset.loc[dataset.Cabin.isnull(), 'Cabin'] = 0
 
 
 def train_models(train_df, test_df):
