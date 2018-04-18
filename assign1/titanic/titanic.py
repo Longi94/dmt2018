@@ -15,6 +15,8 @@ from sklearn.linear_model import Perceptron
 from sklearn.linear_model import SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 
+pd.set_option('display.width', 1000)
+
 # reading the data
 train_df = pd.read_csv('train.csv')
 test_df = pd.read_csv('test.csv')
@@ -23,6 +25,11 @@ test_df = pd.read_csv('test.csv')
 train_df = train_df.drop(['Ticket', 'Cabin'], axis=1)
 test_df = test_df.drop(['Ticket', 'Cabin'], axis=1)
 combine = [train_df, test_df]
+
+print('Original data:')
+print(train_df.head(20))
+print('...')
+print(train_df.tail(20))
 
 # create title feature from names
 for dataset in combine:
@@ -91,23 +98,19 @@ for dataset in combine:
 train_df = train_df.drop(['AgeBand'], axis=1)
 combine = [train_df, test_df]
 
-# create FamilySize feature from sibsp and parch
-for dataset in combine:
-    dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
+# # create FamilySize feature from sibsp and parch
+# for dataset in combine:
+#     dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
 
-# create is alone feature
-for dataset in combine:
-    dataset['IsAlone'] = 0
-    dataset.loc[dataset['FamilySize'] == 1, 'IsAlone'] = 1
-
-train_df[['IsAlone', 'Survived']].groupby(['IsAlone'], as_index=False).mean()
-
-# drop parch, sibsp and familySize in favor of isAlone
-train_df = train_df.drop(['Parch', 'SibSp', 'FamilySize'], axis=1)
-test_df = test_df.drop(['Parch', 'SibSp', 'FamilySize'], axis=1)
-combine = [train_df, test_df]
-
-train_df.head()
+# # create is alone feature
+# for dataset in combine:
+#     dataset['IsAlone'] = 0
+#     dataset.loc[dataset['FamilySize'] == 1, 'IsAlone'] = 1
+#
+# # drop parch, sibsp and familySize in favor of isAlone
+# train_df = train_df.drop(['Parch', 'SibSp'], axis=1)
+# test_df = test_df.drop(['Parch', 'SibSp'], axis=1)
+# combine = [train_df, test_df]
 
 # most frequent port
 freq_port = train_df.Embarked.dropna().mode()[0]
@@ -138,7 +141,9 @@ train_df = train_df.drop(['FareBand'], axis=1)
 combine = [train_df, test_df]
 
 print("Final data structure:")
-print(train_df.head())
+print(train_df.head(20))
+print('...')
+print(train_df.tail(20))
 
 # training data
 X_train = train_df.drop("Survived", axis=1)
@@ -229,14 +234,26 @@ models = pd.DataFrame({
 
 print(models[['Name', 'Score']].sort_values(by='Score', ascending=False))
 
-selected_model = models.sort_values(by='Score', ascending=False).iloc[0]
-print('Selecting model ' + selected_model['Name'])
+selected_model0 = models.sort_values(by='Score', ascending=False).iloc[0]
+selected_model1 = models.sort_values(by='Score', ascending=False).iloc[1]
+selected_model2 = models.sort_values(by='Score', ascending=False).iloc[2]
+print('Selecting model ' + selected_model0['Name'] + ', ' + selected_model1['Name'] + ', ' + selected_model2['Name'])
 
-submission = pd.DataFrame({
+submission0 = pd.DataFrame({
     "PassengerId": test_df["PassengerId"],
-    "Survived": selected_model["Model"]
+    "Survived": selected_model0["Model"]
+})
+submission1 = pd.DataFrame({
+    "PassengerId": test_df["PassengerId"],
+    "Survived": selected_model1["Model"]
+})
+submission2 = pd.DataFrame({
+    "PassengerId": test_df["PassengerId"],
+    "Survived": selected_model2["Model"]
 })
 
-folder = 'results/' + str(round(time.time())) + '_' + selected_model['Abbrev']
+folder = 'results/' + str(round(time.time()))
 os.makedirs(folder)
-submission.to_csv(folder + '/submission.csv', index=False)
+submission0.to_csv(folder + '/submission'  + '_' + selected_model0['Abbrev'] + '.csv', index=False)
+submission1.to_csv(folder + '/submission'  + '_' + selected_model1['Abbrev'] + '.csv', index=False)
+submission2.to_csv(folder + '/submission'  + '_' + selected_model2['Abbrev'] + '.csv', index=False)
