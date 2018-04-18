@@ -131,11 +131,11 @@ test_df = test_df.drop(['Parch', 'SibSp'], axis=1)
 combine = [train_df, test_df]
 
 # most frequent port
-freq_port = train_df.Embarked.dropna().mode()[0]
+# freq_port = train_df.Embarked.dropna().mode()[0]
 
 # fill in the missing embarked port
 for dataset in combine:
-    dataset['Embarked'] = dataset['Embarked'].fillna(freq_port)
+    dataset['Embarked'] = dataset['Embarked'].fillna('C')
 
 # convert embark to numeric
 for dataset in combine:
