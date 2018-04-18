@@ -35,8 +35,10 @@ print(train_df.tail(20))
 for dataset in combine:
     dataset['Sex'] = dataset['Sex'].map({'female': 1, 'male': 0}).astype(int)
 
-# add missing fare, there is one missing fare
-test_df['Fare'].fillna(test_df['Fare'].dropna().median(), inplace=True)
+# add missing fare, there is one missing fare with S and 3
+full = pd.concat([train_df, test_df])
+fare_guess = full.loc[(full['Embarked'] == 'S') & (full['Pclass'] == 3), 'Fare'].mean()
+test_df['Fare'] = test_df['Fare'].fillna(fare_guess)
 
 # create fare band
 train_df['FareBand'] = pd.qcut(train_df['Fare'], 4)
