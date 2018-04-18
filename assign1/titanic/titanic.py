@@ -31,6 +31,27 @@ print(train_df.head(20))
 print('...')
 print(train_df.tail(20))
 
+# sex to ordinal
+for dataset in combine:
+    dataset['Sex'] = dataset['Sex'].map({'female': 1, 'male': 0}).astype(int)
+
+# add missing fare, there is one missing fare
+test_df['Fare'].fillna(test_df['Fare'].dropna().median(), inplace=True)
+
+# create fare band
+train_df['FareBand'] = pd.qcut(train_df['Fare'], 4)
+
+# convert fare to ordinal values
+for dataset in combine:
+    dataset.loc[dataset['Fare'] <= 7.91, 'Fare'] = 0
+    dataset.loc[(dataset['Fare'] > 7.91) & (dataset['Fare'] <= 14.454), 'Fare'] = 1
+    dataset.loc[(dataset['Fare'] > 14.454) & (dataset['Fare'] <= 31), 'Fare'] = 2
+    dataset.loc[dataset['Fare'] > 31, 'Fare'] = 3
+    dataset['Fare'] = dataset['Fare'].astype(int)
+
+train_df = train_df.drop(['FareBand'], axis=1)
+combine = [train_df, test_df]
+
 # create title feature from names
 for dataset in combine:
     dataset['Title'] = dataset.Name.str.extract(' ([A-Za-z]+)\.', expand=False)
@@ -54,10 +75,6 @@ for dataset in combine:
 train_df = train_df.drop(['Name', 'PassengerId'], axis=1)
 test_df = test_df.drop(['Name'], axis=1)
 combine = [train_df, test_df]
-
-# sex to ordinal
-for dataset in combine:
-    dataset['Sex'] = dataset['Sex'].map({'female': 1, 'male': 0}).astype(int)
 
 # guess the age for passengers with missing value
 guess_ages = np.zeros((2, 3))
@@ -98,19 +115,19 @@ for dataset in combine:
 train_df = train_df.drop(['AgeBand'], axis=1)
 combine = [train_df, test_df]
 
-# # create FamilySize feature from sibsp and parch
-# for dataset in combine:
-#     dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
+# create FamilySize feature from sibsp and parch
+for dataset in combine:
+    dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
 
-# # create is alone feature
-# for dataset in combine:
-#     dataset['IsAlone'] = 0
-#     dataset.loc[dataset['FamilySize'] == 1, 'IsAlone'] = 1
-#
-# # drop parch, sibsp and familySize in favor of isAlone
-# train_df = train_df.drop(['Parch', 'SibSp'], axis=1)
-# test_df = test_df.drop(['Parch', 'SibSp'], axis=1)
-# combine = [train_df, test_df]
+# create is alone feature
+for dataset in combine:
+    dataset['IsAlone'] = 0
+    dataset.loc[dataset['FamilySize'] == 1, 'IsAlone'] = 1
+
+# drop parch, sibsp and familySize in favor of isAlone
+train_df = train_df.drop(['Parch', 'SibSp'], axis=1)
+test_df = test_df.drop(['Parch', 'SibSp'], axis=1)
+combine = [train_df, test_df]
 
 # most frequent port
 freq_port = train_df.Embarked.dropna().mode()[0]
@@ -122,23 +139,6 @@ for dataset in combine:
 # convert embark to numeric
 for dataset in combine:
     dataset['Embarked'] = dataset['Embarked'].map({'S': 0, 'C': 1, 'Q': 2}).astype(int)
-
-# add missing fare
-test_df['Fare'].fillna(test_df['Fare'].dropna().median(), inplace=True)
-
-# create fare band
-train_df['FareBand'] = pd.qcut(train_df['Fare'], 4)
-
-# convert fare to ordinal values
-for dataset in combine:
-    dataset.loc[dataset['Fare'] <= 7.91, 'Fare'] = 0
-    dataset.loc[(dataset['Fare'] > 7.91) & (dataset['Fare'] <= 14.454), 'Fare'] = 1
-    dataset.loc[(dataset['Fare'] > 14.454) & (dataset['Fare'] <= 31), 'Fare'] = 2
-    dataset.loc[dataset['Fare'] > 31, 'Fare'] = 3
-    dataset['Fare'] = dataset['Fare'].astype(int)
-
-train_df = train_df.drop(['FareBand'], axis=1)
-combine = [train_df, test_df]
 
 print("Final data structure:")
 print(train_df.head(20))
