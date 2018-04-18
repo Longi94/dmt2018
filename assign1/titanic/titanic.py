@@ -36,18 +36,19 @@ def main():
     fill_fare(combine[0], combine[1])
     band_fare(combine)
 
-    # TODO build model to predict age
-    # TODO engineer mother, child features
-
     fill_embarked(combine)
     embarked_to_ordinal(combine)
 
     create_title(combine)
 
-    fill_age(combine)
-    band_age(combine)
-
     create_family_size(combine)
+
+    fill_age(combine)
+
+    create_child(combine)
+    create_mother(combine)
+
+    band_age(combine)
 
     print("Final data structure:")
     print_preview(combine[0])
@@ -127,6 +128,7 @@ def create_title(combine):
 
 
 def fill_age(combine):
+    # TODO build model to predict age
     # guess the age for passengers with missing value
     guess_ages = np.zeros((2, 3))
     for dataset in combine:
@@ -180,8 +182,21 @@ def create_family_size(combine):
         dataset.loc[(dataset['FamilySize'] > 4), 'FamilySize'] = 2
 
     # drop parch, sibsp and familySize in favor of isAlone
-    combine[0] = combine[0].drop(['Parch', 'SibSp'], axis=1)
-    combine[1] = combine[1].drop(['Parch', 'SibSp'], axis=1)
+    # combine[0] = combine[0].drop(['Parch', 'SibSp'], axis=1)
+    # combine[1] = combine[1].drop(['Parch', 'SibSp'], axis=1)
+
+
+def create_child(combine):
+    for dataset in combine:
+        dataset['Child'] = 0
+        dataset.loc[dataset['Age'] < 18, 'Child'] = 1
+
+
+def create_mother(combine):
+    for dataset in combine:
+        dataset['Mother'] = 0
+        dataset.loc[(dataset['Child'] == 0) & (dataset['Parch'] > 0) & (dataset['Sex'] == 1) &
+                    (dataset['Title'] != 2), 'Mother'] = 1
 
 
 def train_models(train_df, test_df):
