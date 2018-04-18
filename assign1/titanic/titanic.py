@@ -119,10 +119,11 @@ combine = [train_df, test_df]
 for dataset in combine:
     dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
 
-# create is alone feature
+# create 3 categories by family size
 for dataset in combine:
-    dataset['IsAlone'] = 0
-    dataset.loc[dataset['FamilySize'] == 1, 'IsAlone'] = 1
+    dataset.loc[dataset['FamilySize'] == 1, 'FamilySize'] = 0 # alone
+    dataset.loc[(dataset['FamilySize'] > 1) & (dataset['FamilySize'] < 5), 'FamilySize'] = 1
+    dataset.loc[(dataset['FamilySize'] > 4), 'FamilySize'] = 2
 
 # drop parch, sibsp and familySize in favor of isAlone
 train_df = train_df.drop(['Parch', 'SibSp'], axis=1)
