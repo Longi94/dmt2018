@@ -17,246 +17,283 @@ from sklearn.tree import DecisionTreeClassifier
 
 pd.set_option('display.width', 1000)
 
-# reading the data
-train_df = pd.read_csv('train.csv')
-test_df = pd.read_csv('test.csv')
 
-# drop ticket and cabin
-train_df = train_df.drop(['Ticket', 'Cabin'], axis=1)
-test_df = test_df.drop(['Ticket', 'Cabin'], axis=1)
-combine = [train_df, test_df]
+def main():
+    # reading the data
+    train_df = pd.read_csv('train.csv')
+    test_df = pd.read_csv('test.csv')
+    combine = [train_df, test_df]
 
-print('Original data:')
-print(train_df.head(20))
-print('...')
-print(train_df.tail(20))
+    # drop ticket and cabin
+    combine[0] = combine[0].drop(['Ticket', 'Cabin'], axis=1)
+    combine[1] = combine[1].drop(['Ticket', 'Cabin'], axis=1)
+
+    print('Original data:')
+    print_preview(combine[0])
+
+    sex_to_ordinal(combine)
+
+    fill_fare(combine[0], combine[1])
+    band_fare(combine)
+
+    # TODO build model to predict age
+    # TODO engineer mother, child features
+
+    fill_embarked(combine)
+    embarked_to_ordinal(combine)
+
+    create_title(combine)
+
+    fill_age(combine)
+    band_age(combine)
+
+    create_family_size(combine)
+
+    print("Final data structure:")
+    print_preview(combine[0])
+
+    train_models(combine[0], combine[1])
+
+
+def print_preview(df):
+    print(df.head(20))
+    print('...')
+    print(df.tail(20))
+
 
 # sex to ordinal
-for dataset in combine:
-    dataset['Sex'] = dataset['Sex'].map({'female': 1, 'male': 0}).astype(int)
+def sex_to_ordinal(combine):
+    for dataset in combine:
+        dataset['Sex'] = dataset['Sex'].map({'female': 1, 'male': 0}).astype(int)
 
-# add missing fare, there is one missing fare with S and 3
-full = pd.concat([train_df, test_df])
-fare_guess = full.loc[(full['Embarked'] == 'S') & (full['Pclass'] == 3), 'Fare'].mean()
-test_df['Fare'] = test_df['Fare'].fillna(fare_guess)
 
-# create fare band
-train_df['FareBand'] = pd.qcut(train_df['Fare'], 4)
+def fill_fare(train_df, test_df):
+    # add missing fare, there is one missing fare with S and 3
+    full = pd.concat([train_df, test_df])
+    fare_guess = full.loc[(full['Embarked'] == 'S') & (full['Pclass'] == 3), 'Fare'].mean()
+    test_df['Fare'] = test_df['Fare'].fillna(fare_guess)
 
-# convert fare to ordinal values
-for dataset in combine:
-    dataset.loc[dataset['Fare'] <= 7.91, 'Fare'] = 0
-    dataset.loc[(dataset['Fare'] > 7.91) & (dataset['Fare'] <= 14.454), 'Fare'] = 1
-    dataset.loc[(dataset['Fare'] > 14.454) & (dataset['Fare'] <= 31), 'Fare'] = 2
-    dataset.loc[dataset['Fare'] > 31, 'Fare'] = 3
-    dataset['Fare'] = dataset['Fare'].astype(int)
 
-train_df = train_df.drop(['FareBand'], axis=1)
-combine = [train_df, test_df]
+def fill_embarked(combine):
+    # fill in the missing embarked port
+    for dataset in combine:
+        dataset['Embarked'] = dataset['Embarked'].fillna('C')
 
-# create title feature from names
-for dataset in combine:
-    dataset['Title'] = dataset.Name.str.extract(' ([A-Za-z]+)\.', expand=False)
 
-# normalize titles
-for dataset in combine:
-    dataset['Title'] = dataset['Title'].replace(
-        ['Lady', 'Countess', 'Capt', 'Col', 'Don', 'Dr', 'Major', 'Rev', 'Sir', 'Jonkheer', 'Dona'], 'Rare')
+def embarked_to_ordinal(combine):
+    # convert embark to numeric
+    for dataset in combine:
+        dataset['Embarked'] = dataset['Embarked'].map({'S': 0, 'C': 1, 'Q': 2}).astype(int)
 
-    dataset['Title'] = dataset['Title'].replace('Mlle', 'Miss')
-    dataset['Title'] = dataset['Title'].replace('Ms', 'Miss')
-    dataset['Title'] = dataset['Title'].replace('Mme', 'Mrs')
 
-# title to ordinal
-title_mapping = {"Mr": 1, "Miss": 2, "Mrs": 3, "Master": 4, "Rare": 5}
-for dataset in combine:
-    dataset['Title'] = dataset['Title'].map(title_mapping)
-    dataset['Title'] = dataset['Title'].fillna(0)
+def band_fare(combine):
+    # create fare band
+    combine[0]['FareBand'] = pd.qcut(combine[0]['Fare'], 4)
 
-# drop name and passangerid
-train_df = train_df.drop(['Name', 'PassengerId'], axis=1)
-test_df = test_df.drop(['Name'], axis=1)
-combine = [train_df, test_df]
+    # convert fare to ordinal values
+    for dataset in combine:
+        dataset.loc[dataset['Fare'] <= 7.91, 'Fare'] = 0
+        dataset.loc[(dataset['Fare'] > 7.91) & (dataset['Fare'] <= 14.454), 'Fare'] = 1
+        dataset.loc[(dataset['Fare'] > 14.454) & (dataset['Fare'] <= 31), 'Fare'] = 2
+        dataset.loc[dataset['Fare'] > 31, 'Fare'] = 3
+        dataset['Fare'] = dataset['Fare'].astype(int)
 
-# guess the age for passengers with missing value
-guess_ages = np.zeros((2, 3))
-for dataset in combine:
-    for i in range(0, 2):
-        for j in range(0, 3):
-            guess_df = dataset[(dataset['Sex'] == i) &
-                               (dataset['Pclass'] == j + 1)]['Age'].dropna()
+    combine[0] = combine[0].drop(['FareBand'], axis=1)
 
-            # age_mean = guess_df.mean()
-            # age_std = guess_df.std()
-            # age_guess = rnd.uniform(age_mean - age_std, age_mean + age_std)
 
-            age_guess = guess_df.median()
+def create_title(combine):
+    # create title feature from names
+    for dataset in combine:
+        dataset['Title'] = dataset.Name.str.extract(' ([A-Za-z]+)\.', expand=False)
 
-            # Convert random age float to nearest .5 age
-            guess_ages[i, j] = int(age_guess / 0.5 + 0.5) * 0.5
+    # normalize titles
+    for dataset in combine:
+        dataset['Title'] = dataset['Title'].replace(
+            ['Lady', 'Countess', 'Capt', 'Col', 'Don', 'Dr', 'Major', 'Rev', 'Sir', 'Jonkheer', 'Dona'], 'Rare')
 
-    for i in range(0, 2):
-        for j in range(0, 3):
-            dataset.loc[(dataset.Age.isnull()) & (dataset.Sex == i) & (dataset.Pclass == j + 1),
-                        'Age'] = guess_ages[i, j]
+        dataset['Title'] = dataset['Title'].replace('Mlle', 'Miss')
+        dataset['Title'] = dataset['Title'].replace('Ms', 'Miss')
+        dataset['Title'] = dataset['Title'].replace('Mme', 'Mrs')
 
-    dataset['Age'] = dataset['Age'].astype(int)
+    # title to ordinal
+    title_mapping = {"Mr": 1, "Miss": 2, "Mrs": 3, "Master": 4, "Rare": 5}
+    for dataset in combine:
+        dataset['Title'] = dataset['Title'].map(title_mapping)
+        dataset['Title'] = dataset['Title'].fillna(0)
 
-# creating age bands
-train_df['AgeBand'] = pd.cut(train_df['Age'], 5)
+    # drop name and passangerid
+    combine[0] = combine[0].drop(['Name', 'PassengerId'], axis=1)
+    combine[1] = combine[1].drop(['Name'], axis=1)
 
-# replace age with ordinals
-for dataset in combine:
-    dataset.loc[dataset['Age'] <= 16, 'Age'] = 0
-    dataset.loc[(dataset['Age'] > 16) & (dataset['Age'] <= 32), 'Age'] = 1
-    dataset.loc[(dataset['Age'] > 32) & (dataset['Age'] <= 48), 'Age'] = 2
-    dataset.loc[(dataset['Age'] > 48) & (dataset['Age'] <= 64), 'Age'] = 3
-    dataset.loc[dataset['Age'] > 64, 'Age'] = 4
 
-# remove age band feature
-train_df = train_df.drop(['AgeBand'], axis=1)
-combine = [train_df, test_df]
+def fill_age(combine):
+    # guess the age for passengers with missing value
+    guess_ages = np.zeros((2, 3))
+    for dataset in combine:
+        for i in range(0, 2):
+            for j in range(0, 3):
+                guess_df = dataset[(dataset['Sex'] == i) &
+                                   (dataset['Pclass'] == j + 1)]['Age'].dropna()
 
-# create FamilySize feature from sibsp and parch
-for dataset in combine:
-    dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
+                # age_mean = guess_df.mean()
+                # age_std = guess_df.std()
+                # age_guess = rnd.uniform(age_mean - age_std, age_mean + age_std)
 
-# create 3 categories by family size
-for dataset in combine:
-    dataset.loc[dataset['FamilySize'] == 1, 'FamilySize'] = 0 # alone
-    dataset.loc[(dataset['FamilySize'] > 1) & (dataset['FamilySize'] < 5), 'FamilySize'] = 1
-    dataset.loc[(dataset['FamilySize'] > 4), 'FamilySize'] = 2
+                age_guess = guess_df.median()
 
-# drop parch, sibsp and familySize in favor of isAlone
-train_df = train_df.drop(['Parch', 'SibSp'], axis=1)
-test_df = test_df.drop(['Parch', 'SibSp'], axis=1)
-combine = [train_df, test_df]
+                # Convert random age float to nearest .5 age
+                guess_ages[i, j] = int(age_guess / 0.5 + 0.5) * 0.5
 
-# most frequent port
-# freq_port = train_df.Embarked.dropna().mode()[0]
+        for i in range(0, 2):
+            for j in range(0, 3):
+                dataset.loc[(dataset.Age.isnull()) & (dataset.Sex == i) & (dataset.Pclass == j + 1),
+                            'Age'] = guess_ages[i, j]
 
-# fill in the missing embarked port
-for dataset in combine:
-    dataset['Embarked'] = dataset['Embarked'].fillna('C')
+        dataset['Age'] = dataset['Age'].astype(int)
 
-# convert embark to numeric
-for dataset in combine:
-    dataset['Embarked'] = dataset['Embarked'].map({'S': 0, 'C': 1, 'Q': 2}).astype(int)
 
-print("Final data structure:")
-print(train_df.head(20))
-print('...')
-print(train_df.tail(20))
+def band_age(combine):
+    # creating age bands
+    combine[0]['AgeBand'] = pd.cut(combine[0]['Age'], 5)
 
-# training data
-X_train = train_df.drop("Survived", axis=1)
-Y_train = train_df["Survived"]
-X_test = test_df.drop("PassengerId", axis=1).copy()
+    # replace age with ordinals
+    for dataset in combine:
+        dataset.loc[dataset['Age'] <= 16, 'Age'] = 0
+        dataset.loc[(dataset['Age'] > 16) & (dataset['Age'] <= 32), 'Age'] = 1
+        dataset.loc[(dataset['Age'] > 32) & (dataset['Age'] <= 48), 'Age'] = 2
+        dataset.loc[(dataset['Age'] > 48) & (dataset['Age'] <= 64), 'Age'] = 3
+        dataset.loc[dataset['Age'] > 64, 'Age'] = 4
 
-# Logistic Regression
-print("Training Logistic Regression model...")
-logreg = LogisticRegression()
-logreg.fit(X_train, Y_train)
-model_logreg = logreg.predict(X_test)
-acc_log = logreg.score(X_train, Y_train) * 100
+    # remove age band feature
+    combine[0] = combine[0].drop(['AgeBand'], axis=1)
 
-# calculate coefficients
-coeff_df = pd.DataFrame(train_df.columns.delete(0))
-coeff_df.columns = ['Feature']
-coeff_df["Correlation"] = pd.Series(logreg.coef_[0])
 
-# Support Vector Machines
-print("Training SVM model...")
-svc = SVC()
-svc.fit(X_train, Y_train)
-model_svc = svc.predict(X_test)
-acc_svc = svc.score(X_train, Y_train) * 100
+def create_family_size(combine):
+    # create FamilySize feature from sibsp and parch
+    for dataset in combine:
+        dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
 
-# K nearest neighbors
-print("Training KNN model...")
-knn = KNeighborsClassifier(n_neighbors=3)
-knn.fit(X_train, Y_train)
-model_knn = knn.predict(X_test)
-acc_knn = knn.score(X_train, Y_train) * 100
+    # create 3 categories by family size
+    for dataset in combine:
+        dataset.loc[dataset['FamilySize'] == 1, 'FamilySize'] = 0  # alone
+        dataset.loc[(dataset['FamilySize'] > 1) & (dataset['FamilySize'] < 5), 'FamilySize'] = 1
+        dataset.loc[(dataset['FamilySize'] > 4), 'FamilySize'] = 2
 
-# Gaussian Naive Bayes
-print("Training Gaussian Naive Bayes model...")
-gaussian = GaussianNB()
-gaussian.fit(X_train, Y_train)
-model_gaussian = gaussian.predict(X_test)
-acc_gaussian = gaussian.score(X_train, Y_train) * 100
+    # drop parch, sibsp and familySize in favor of isAlone
+    combine[0] = combine[0].drop(['Parch', 'SibSp'], axis=1)
+    combine[1] = combine[1].drop(['Parch', 'SibSp'], axis=1)
 
-# Perceptron
-print("Training Perceptron model...")
-perceptron = Perceptron()
-perceptron.fit(X_train, Y_train)
-model_perceptron = perceptron.predict(X_test)
-acc_perceptron = perceptron.score(X_train, Y_train) * 100
 
-# Linear SVC
-print("Training Linear SVC model...")
-linear_svc = LinearSVC()
-linear_svc.fit(X_train, Y_train)
-model_linear_svc = linear_svc.predict(X_test)
-acc_linear_svc = linear_svc.score(X_train, Y_train) * 100
+def train_models(train_df, test_df):
+    # training data
+    x_train = train_df.drop("Survived", axis=1)
+    y_train = train_df["Survived"]
+    x_test = test_df.drop("PassengerId", axis=1).copy()
 
-# Stochastic Gradient Descent
-print("Training Stochastic Gradient Descent model...")
-sgd = SGDClassifier()
-sgd.fit(X_train, Y_train)
-model_sgd = sgd.predict(X_test)
-acc_sgd = sgd.score(X_train, Y_train) * 100
+    # Logistic Regression
+    print("Training Logistic Regression model...")
+    logreg = LogisticRegression()
+    logreg.fit(x_train, y_train)
+    model_logreg = logreg.predict(x_test)
+    acc_log = logreg.score(x_train, y_train) * 100
 
-# Decision Tree
-print("Training Decision Tree model...")
-decision_tree = DecisionTreeClassifier()
-decision_tree.fit(X_train, Y_train)
-model_decision_tree = decision_tree.predict(X_test)
-acc_decision_tree = decision_tree.score(X_train, Y_train) * 100
+    # Support Vector Machines
+    print("Training SVM model...")
+    svc = SVC()
+    svc.fit(x_train, y_train)
+    model_svc = svc.predict(x_test)
+    acc_svc = svc.score(x_train, y_train) * 100
 
-# Random Forest
-print("Training Random Forest model...")
-random_forest = RandomForestClassifier(n_estimators=100)
-random_forest.fit(X_train, Y_train)
-model_random_forest = random_forest.predict(X_test)
-acc_random_forest = random_forest.score(X_train, Y_train) * 100
+    # K nearest neighbors
+    print("Training KNN model...")
+    knn = KNeighborsClassifier(n_neighbors=3)
+    knn.fit(x_train, y_train)
+    model_knn = knn.predict(x_test)
+    acc_knn = knn.score(x_train, y_train) * 100
 
-# model evaluation
-models = pd.DataFrame({
-    'Name': ['Support Vector Machines', 'KNN', 'Logistic Regression',
-             'Random Forest', 'Naive Bayes', 'Perceptron',
-             'Stochastic Gradient Decent', 'Linear SVC',
-             'Decision Tree'],
-    'Abbrev': ['SVM', 'KNN', 'LOG_REG', 'RF', 'GNB', 'PERC', 'SGD', 'L_SVC', 'D_TREE'],
-    'Score': [acc_svc, acc_knn, acc_log,
-              acc_random_forest, acc_gaussian, acc_perceptron,
-              acc_sgd, acc_linear_svc, acc_decision_tree],
-    'Model': [model_svc, model_knn, model_logreg,
-              model_random_forest, model_gaussian, model_perceptron,
-              model_sgd, model_linear_svc, model_decision_tree]})
+    # Gaussian Naive Bayes
+    print("Training Gaussian Naive Bayes model...")
+    gaussian = GaussianNB()
+    gaussian.fit(x_train, y_train)
+    model_gaussian = gaussian.predict(x_test)
+    acc_gaussian = gaussian.score(x_train, y_train) * 100
 
-print(models[['Name', 'Score']].sort_values(by='Score', ascending=False))
+    # Perceptron
+    print("Training Perceptron model...")
+    perceptron = Perceptron()
+    perceptron.fit(x_train, y_train)
+    model_perceptron = perceptron.predict(x_test)
+    acc_perceptron = perceptron.score(x_train, y_train) * 100
 
-selected_model0 = models.sort_values(by='Score', ascending=False).iloc[0]
-selected_model1 = models.sort_values(by='Score', ascending=False).iloc[1]
-selected_model2 = models.sort_values(by='Score', ascending=False).iloc[2]
-print('Selecting model ' + selected_model0['Name'] + ', ' + selected_model1['Name'] + ', ' + selected_model2['Name'])
+    # Linear SVC
+    print("Training Linear SVC model...")
+    linear_svc = LinearSVC()
+    linear_svc.fit(x_train, y_train)
+    model_linear_svc = linear_svc.predict(x_test)
+    acc_linear_svc = linear_svc.score(x_train, y_train) * 100
 
-submission0 = pd.DataFrame({
-    "PassengerId": test_df["PassengerId"],
-    "Survived": selected_model0["Model"]
-})
-submission1 = pd.DataFrame({
-    "PassengerId": test_df["PassengerId"],
-    "Survived": selected_model1["Model"]
-})
-submission2 = pd.DataFrame({
-    "PassengerId": test_df["PassengerId"],
-    "Survived": selected_model2["Model"]
-})
+    # Stochastic Gradient Descent
+    print("Training Stochastic Gradient Descent model...")
+    sgd = SGDClassifier()
+    sgd.fit(x_train, y_train)
+    model_sgd = sgd.predict(x_test)
+    acc_sgd = sgd.score(x_train, y_train) * 100
 
-folder = 'results/' + str(round(time.time()))
-os.makedirs(folder)
-submission0.to_csv(folder + '/submission'  + '_' + selected_model0['Abbrev'] + '.csv', index=False)
-submission1.to_csv(folder + '/submission'  + '_' + selected_model1['Abbrev'] + '.csv', index=False)
-submission2.to_csv(folder + '/submission'  + '_' + selected_model2['Abbrev'] + '.csv', index=False)
+    # Decision Tree
+    print("Training Decision Tree model...")
+    decision_tree = DecisionTreeClassifier()
+    decision_tree.fit(x_train, y_train)
+    model_decision_tree = decision_tree.predict(x_test)
+    acc_decision_tree = decision_tree.score(x_train, y_train) * 100
+
+    # Random Forest
+    print("Training Random Forest model...")
+    random_forest = RandomForestClassifier(n_estimators=100)
+    random_forest.fit(x_train, y_train)
+    model_random_forest = random_forest.predict(x_test)
+    acc_random_forest = random_forest.score(x_train, y_train) * 100
+
+    # model evaluation
+    models = pd.DataFrame({
+        'Name': ['Support Vector Machines', 'KNN', 'Logistic Regression',
+                 'Random Forest', 'Naive Bayes', 'Perceptron',
+                 'Stochastic Gradient Decent', 'Linear SVC',
+                 'Decision Tree'],
+        'Abbrev': ['SVM', 'KNN', 'LOG_REG', 'RF', 'GNB', 'PERC', 'SGD', 'L_SVC', 'D_TREE'],
+        'Score': [acc_svc, acc_knn, acc_log,
+                  acc_random_forest, acc_gaussian, acc_perceptron,
+                  acc_sgd, acc_linear_svc, acc_decision_tree],
+        'Model': [model_svc, model_knn, model_logreg,
+                  model_random_forest, model_gaussian, model_perceptron,
+                  model_sgd, model_linear_svc, model_decision_tree]})
+
+    print(models[['Name', 'Score']].sort_values(by='Score', ascending=False))
+
+    selected_model0 = models.sort_values(by='Score', ascending=False).iloc[0]
+    selected_model1 = models.sort_values(by='Score', ascending=False).iloc[1]
+    selected_model2 = models.sort_values(by='Score', ascending=False).iloc[2]
+    print(
+        'Selecting model ' + selected_model0['Name'] + ', ' + selected_model1['Name'] + ', ' + selected_model2['Name'])
+
+    submission0 = pd.DataFrame({
+        "PassengerId": test_df["PassengerId"],
+        "Survived": selected_model0["Model"]
+    })
+    submission1 = pd.DataFrame({
+        "PassengerId": test_df["PassengerId"],
+        "Survived": selected_model1["Model"]
+    })
+    submission2 = pd.DataFrame({
+        "PassengerId": test_df["PassengerId"],
+        "Survived": selected_model2["Model"]
+    })
+
+    folder = 'results/' + str(round(time.time()))
+    os.makedirs(folder)
+    submission0.to_csv(folder + '/submission' + '_' + selected_model0['Abbrev'] + '.csv', index=False)
+    submission1.to_csv(folder + '/submission' + '_' + selected_model1['Abbrev'] + '.csv', index=False)
+    submission2.to_csv(folder + '/submission' + '_' + selected_model2['Abbrev'] + '.csv', index=False)
+
+
+if __name__ == '__main__':
+    main()
