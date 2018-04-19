@@ -55,6 +55,10 @@ def main():
 
     band_age(combine)
 
+    # drop parch, sibsp and familySize in favor of isAlone
+    combine[0] = combine[0].drop(['Parch', 'SibSp'], axis=1)
+    combine[1] = combine[1].drop(['Parch', 'SibSp'], axis=1)
+
     print("Final data structure:")
     print_preview(combine[0])
 
@@ -174,10 +178,6 @@ def create_family_size(combine):
     for dataset in combine:
         dataset['IsAlone'] = 0
         dataset.loc[(dataset['SibSp'] + dataset['Parch'] + 1) == 1, 'IsAlone'] = 1
-
-    # drop parch, sibsp and familySize in favor of isAlone
-    # combine[0] = combine[0].drop(['Parch', 'SibSp'], axis=1)
-    # combine[1] = combine[1].drop(['Parch', 'SibSp'], axis=1)
 
 
 def create_child(combine):
