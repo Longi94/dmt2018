@@ -58,6 +58,8 @@ def main():
     print("Final data structure:")
     print_preview(combine[0])
 
+    combine[0].to_csv("processed_train.csv")
+
     train_models(combine[0], combine[1])
 
 
@@ -170,13 +172,8 @@ def band_age(combine):
 def create_family_size(combine):
     # create FamilySize feature from sibsp and parch
     for dataset in combine:
-        dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
-
-    # create 3 categories by family size
-    for dataset in combine:
-        dataset.loc[dataset['FamilySize'] == 1, 'FamilySize'] = 0  # alone
-        dataset.loc[(dataset['FamilySize'] > 1) & (dataset['FamilySize'] < 5), 'FamilySize'] = 1
-        dataset.loc[(dataset['FamilySize'] > 4), 'FamilySize'] = 2
+        dataset['IsAlone'] = 0
+        dataset.loc[(dataset['SibSp'] + dataset['Parch'] + 1) == 1, 'IsAlone'] = 1
 
     # drop parch, sibsp and familySize in favor of isAlone
     # combine[0] = combine[0].drop(['Parch', 'SibSp'], axis=1)
