@@ -6,12 +6,13 @@ pd.set_option('display.width', 1000)
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: [input_file] [output_file]")
+    if len(sys.argv) <= 3:
+        print("Usage: [input_file] [output_file] [is_test_set: 0 or 1]")
         return
 
     in_file = sys.argv[1]
     out_file = sys.argv[2]
+    is_test = int(sys.argv[3]) == 1
 
     print("Reading " + in_file + "...")
     df = pd.read_csv(in_file)
@@ -23,7 +24,9 @@ def main():
 
     # drop useless columns
     print("Dropping columns...")
-    df.drop(['date_time', 'gross_bookings_usd', 'position'], axis=1, inplace=True)
+    df.drop(['date_time', 'site_id'], axis=1, inplace=True)
+    if not is_test:
+        df.drop(['gross_bookings_usd', 'position'], axis=1, inplace=True)
 
     # fill missing review score with 0 (no information available)
     print("Filling prop_review_score...")
@@ -50,6 +53,9 @@ def main():
     df['orig_destination_distance'].fillna(-1, inplace=True)
 
     fill_comps(df)
+
+    # if not is_test:
+    #     create_result(df)
 
     print('-' * 80)
     print('Final data:')
@@ -79,6 +85,15 @@ def fill_comps(df):
 
         print("Filling " + rate_percent_diff_col + "...")
         df[rate_percent_diff_col].fillna(0, inplace=True)
+
+
+def create_result(df):
+    # Create a new column from the click_bool and the book_bool. This is what we will train to predict and order the
+    # result by. If clicked then 0.5, if booked then 1, 0 otherwise
+    df['result'] = 0
+    df.loc[df['click_bool'] == 1, 'result'] = 0.5
+    df.loc[df['booking_bool'] == 1, 'result'] = 1
+    df.drop(['click_bool', 'booking_bool'], axis=1, inplace=True)
 
 
 if __name__ == '__main__':
