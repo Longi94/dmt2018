@@ -13,7 +13,7 @@ GBM_ENSEMBLE = 1
 
 def main():
     if len(sys.argv) <= 3:
-        print("""Usage: [input_training_file] [input_test_file] [output_file] [model type]
+        print("""Usage: [input_training_file] [output_file] [model type]
         0 - LambdaMART
         1 - Ensemble of Gradient Boosting Classifiers""")
         return
@@ -39,28 +39,42 @@ def main():
 
 def train_lambda_mart(df_train):
     x_train = df_train.drop(["click_bool", "booking_bool", "srch_id", "prop_id"], axis=1)
-    y_train = df_train["booking_bool"].copy()
+    y_train = df_train["booking_bool"] + df_train["click_bool"]
     query_ids = df_train["srch_id"].copy()
 
-    model = LambdaMART(n_estimators=100, verbose=3)
+    print("Fitting LambdaMART...")
+    model = LambdaMART(n_estimators=100, verbose=1)
     model.fit(x_train, y_train, query_ids)
+
+    print_feature_importances(x_train, model)
 
     return model
 
 
 def train_gbm_ensemble(df_train):
     x_train = df_train.drop(["click_bool", "booking_bool", "srch_id", "prop_id"], axis=1)
-    y_train = df_train["booking_bool"].copy()
+    y_train = df_train["booking_bool"] + df_train["click_bool"]
 
     print("Fitting GradientBoostingClassifier...")
-    model = GradientBoostingClassifier(n_estimators=100, verbose=3)
+    model = GradientBoostingClassifier(n_estimators=100, verbose=1)
     model.fit(x_train, y_train)
 
     print("Calculating cross validation score...")
     score = cross_val_score(model, x_train, y_train)
     print("Cross validation score: " + str(score))
 
+    print_feature_importances(x_train, model)
+
     return model
+
+
+def print_feature_importances(x_train, model):
+    print("Important features")
+    importances = zip(x_train.columns.values, list(model.feature_importances_))
+    features = [feature for feature in importances]
+    features.sort(key=lambda x: x[1], reverse=True)
+    for feature in features:
+        print(feature)
 
 
 if __name__ == '__main__':
