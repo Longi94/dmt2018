@@ -54,6 +54,8 @@ def main():
 
     fill_comps(df)
 
+    df.sort_values(by='srch_id', inplace=True)
+
     # if not is_test:
     #     create_result(df)
 
