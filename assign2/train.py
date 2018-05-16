@@ -7,6 +7,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import cross_val_score
 from pyltr.models.lambdamart import LambdaMART
+from ndcg import ndcg_score
 
 
 def main():
