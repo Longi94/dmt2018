@@ -1,6 +1,6 @@
 import pandas as pd
 
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
 from pyltr.models.lambdamart import LambdaMART
 
@@ -39,12 +39,8 @@ def train_gbm_ensemble(df_train):
     y_train = df_train["booking_bool"] + df_train["click_bool"]
 
     print("Fitting GradientBoostingClassifier...")
-    model = GradientBoostingClassifier(n_estimators=100, verbose=1)
+    model = GradientBoostingRegressor(n_estimators=100, verbose=1)
     model.fit(x_train, y_train)
-
-    print("Calculating cross validation score...")
-    score = cross_val_score(model, x_train, y_train)
-    print("Cross validation score: " + str(score))
 
     print_feature_importances(x_train, model)
 
