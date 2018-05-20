@@ -1,33 +1,11 @@
-from math import log
 import pandas as pd
-import numpy as np
-
-
-def dcg_at_k(scores):
-    return scores[0] + sum(sc / log(ind, 2) for sc, ind in zip(scores[1:], range(2, len(scores) + 1)))
-
-
-def ndcg_at_k(predicted_scores, user_scores):
-    assert len(predicted_scores) == len(user_scores)
-    idcg = dcg_at_k(sorted(user_scores, reverse=True))
-    return (dcg_at_k(predicted_scores) / idcg) if idcg > 0.0 else 0.0
+from pyltr.metrics import NDCG
 
 
 def calculate_ndcg(truth, prediction):
     print("Calculating score...")
-    scores = []
-
-    for srch_id in truth["srch_id"].unique():
-        y_true = truth.loc[truth["srch_id"] == srch_id]
-        y_true = y_true["booking_bool"] + y_true["click_bool"]
-
-        y_score = prediction.loc[prediction["SearchId"] == srch_id]["result"]
-
-        score = ndcg_at_k(y_true.tolist(), y_score.tolist())
-        scores.append((srch_id, score))
-        print((srch_id, score))
-
-    return np.mean([score[1] for score in scores])
+    return NDCG().calc_mean(truth["srch_id"].values, (truth["booking_bool"] + truth["click_bool"]).values,
+                     prediction["result"].values)
 
 
 if __name__ == '__main__':
