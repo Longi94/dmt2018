@@ -1,7 +1,4 @@
-import time
-import sys
 import pandas as pd
-import pickle
 
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score
@@ -11,20 +8,7 @@ LAMBDA_MART = 0
 GBM_ENSEMBLE = 1
 
 
-def main():
-    if len(sys.argv) <= 3:
-        print("""Usage: [input_training_file] [output_file] [model type]
-        0 - LambdaMART
-        1 - Ensemble of Gradient Boosting Classifiers""")
-        return
-
-    in_train_file = sys.argv[1]
-    out_file = sys.argv[2]
-    model_type = int(sys.argv[3])
-
-    print("Reading " + in_train_file + "...")
-    df_train = pd.read_csv(in_train_file)
-
+def train(df_train, model_type):
     if model_type == LAMBDA_MART:
         model = train_lambda_mart(df_train)
     elif model_type == GBM_ENSEMBLE:
@@ -33,8 +17,7 @@ def main():
         print("Unknown model type: " + str(model_type))
         return
 
-    print("Dumping model to " + out_file + "...")
-    pickle.dump(model, open(out_file, 'wb'))
+    return model
 
 
 def train_lambda_mart(df_train):
@@ -78,6 +61,32 @@ def print_feature_importances(x_train, model):
 
 
 if __name__ == '__main__':
+    import time
+    import sys
+    import pickle
+
+    if len(sys.argv) <= 3:
+        print("""Usage: [input_training_file] [output_file] [model type]
+        0 - LambdaMART
+        1 - Ensemble of Gradient Boosting Classifiers""")
+        exit(0)
+
     start_ts = time.time()
-    main()
+
+    in_train_file = sys.argv[1]
+    out_file = sys.argv[2]
+    model_type = int(sys.argv[3])
+
+    if model_type > 1 or model_type < 0:
+        print("Unknown model type: " + str(model_type))
+        exit(0)
+
+    print("Reading " + in_train_file + "...")
+    df_train = pd.read_csv(in_train_file)
+
+    model = train(df_train, model_type)
+
+    print("Dumping model to " + out_file + "...")
+    pickle.dump(model, open(out_file, 'wb'))
+
     print("Finished in " + str(time.time() - start_ts) + " seconds.")
