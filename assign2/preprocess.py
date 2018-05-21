@@ -1,22 +1,9 @@
-import sys
 import pandas as pd
-import time
 
 pd.set_option('display.width', 1000)
 
 
-def main():
-    if len(sys.argv) <= 3:
-        print("Usage: [input_file] [output_file] [is_test_set: 0 or 1]")
-        return
-
-    in_file = sys.argv[1]
-    out_file = sys.argv[2]
-    is_test = int(sys.argv[3]) == 1
-
-    print("Reading " + in_file + "...")
-    df = pd.read_csv(in_file)
-
+def preprocess(df, is_test):
     print('Original data:')
     print(df.head(20))
     print('Nan count:')
@@ -56,18 +43,12 @@ def main():
 
     df.sort_values(by='srch_id', inplace=True)
 
-    # if not is_test:
-    #     create_result(df)
-
     print('-' * 80)
     print('Final data:')
     print(df.head(20))
     print('Nan count:')
     print(df.isnull().sum())
     print(df.info())
-
-    print("Writing " + out_file + "...")
-    df.to_csv(out_file, index=False)
 
 
 def fill_comps(df):
@@ -77,28 +58,36 @@ def fill_comps(df):
         inv_col = 'comp' + str(i) + '_inv'
         rate_percent_diff_col = 'comp' + str(i) + '_rate_percent_diff'
 
-        print("Filling " + rate_col + "...")
-        df[rate_col].fillna(0, inplace=True)
-        df[rate_col] = df[rate_col].astype(int)
+        print("Dropping " + rate_col + "...")
+        df.drop(rate_col, axis=1, inplace=True)
 
-        print("Filling " + inv_col + "...")
-        df[inv_col].fillna(0, inplace=True)
-        df[inv_col] = df[inv_col].astype(int)
+        print("Dropping " + inv_col + "...")
+        df.drop(inv_col, axis=1, inplace=True)
 
         print("Filling " + rate_percent_diff_col + "...")
         df[rate_percent_diff_col].fillna(0, inplace=True)
 
 
-def create_result(df):
-    # Create a new column from the click_bool and the book_bool. This is what we will train to predict and order the
-    # result by. If clicked then 0.5, if booked then 1, 0 otherwise
-    df['result'] = 0
-    df.loc[df['click_bool'] == 1, 'result'] = 0.5
-    df.loc[df['booking_bool'] == 1, 'result'] = 1
-    df.drop(['click_bool', 'booking_bool'], axis=1, inplace=True)
-
-
 if __name__ == '__main__':
+    import time
+    import sys
+
+    if len(sys.argv) <= 3:
+        print("Usage: [input_file] [output_file] [is_test_set: 0 or 1]")
+        exit(0)
+
     start_ts = time.time()
-    main()
+
+    in_file = sys.argv[1]
+    out_file = sys.argv[2]
+    is_test = int(sys.argv[3]) == 1
+
+    print("Reading " + in_file + "...")
+    df = pd.read_csv(in_file)
+
+    preprocess(df, is_test)
+
+    print("Writing " + out_file + "...")
+    df.to_csv(out_file, index=False)
+
     print("Finished in " + str(time.time() - start_ts) + " seconds.")
