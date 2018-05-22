@@ -23,8 +23,8 @@ def train(df_train, model_type):
 
 
 def train_lambda_mart(df_train):
-    x_train = df_train.drop(["click_bool", "booking_bool", "srch_id", "prop_id"], axis=1)
-    y_train = df_train["booking_bool"] + df_train["click_bool"]
+    x_train = df_train.drop(["target_score", "srch_id", "prop_id"], axis=1)
+    y_train = df_train["target_score"]
     query_ids = df_train["srch_id"].copy()
 
     print("Fitting LambdaMART...")
@@ -37,8 +37,8 @@ def train_lambda_mart(df_train):
 
 
 def train_gbm_ensemble(df_train):
-    x_train = df_train.drop(["click_bool", "booking_bool", "srch_id", "prop_id"], axis=1)
-    y_train = df_train["booking_bool"] + df_train["click_bool"]
+    x_train = df_train.drop(["target_score", "srch_id", "prop_id"], axis=1)
+    y_train = df_train["target_score"]
 
     print("Fitting GradientBoostingClassifier...")
     model = GradientBoostingRegressor(n_estimators=100, verbose=1)
@@ -61,9 +61,9 @@ def print_feature_importances(x_train, model):
 def balance_data(df):
     print("Balancing data...")
     # Separate majority and minority classes
-    n_upsample = df.loc[df['click_bool'] == 0].shape[0]
-    df_majority = df.loc[df['click_bool'] == 0]
-    df_minority = df.loc[df['click_bool'] == 1]
+    n_upsample = df.loc[df['target_score'] > 0].shape[0]
+    df_majority = df.loc[df['target_score'] == 0]
+    df_minority = df.loc[df['target_score'] > 0]
 
     # Upsample minority class
     df_minority_upsampled = resample(df_minority,

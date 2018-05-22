@@ -48,6 +48,9 @@ def preprocess(df, is_test):
     normalize(df, "prop_location_score2")
     normalize(df, "prop_location_score1")
 
+    if not is_test:
+        create_target_score(df)
+
     df.sort_values(by='srch_id', inplace=True)
 
     print('-' * 80)
@@ -95,6 +98,15 @@ def create_price_order(df):
 def normalize(df, column_name):
     print("Normalizing " + column_name + "...")
     df[column_name] = (df[column_name] - df[column_name].mean()) / df[column_name].std()
+
+
+def create_target_score(df):
+    print("Creating target_score...")
+    df["target_score"] = 0
+    df.loc[df["click_bool"] == 1, "target_score"] = 1
+    df.loc[df["booking_bool"] == 1, "target_score"] = 5
+
+    df.drop(["click_bool", "booking_bool"], axis=1, inplace=True)
 
 
 if __name__ == '__main__':

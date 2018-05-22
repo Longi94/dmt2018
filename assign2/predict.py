@@ -4,11 +4,8 @@ import pandas as pd
 def predict(model, df_test):
     x_test = df_test.drop(["srch_id", "prop_id"], axis=1)
 
-    if "click_bool" in x_test:
-        x_test.drop(["click_bool"], axis=1, inplace=True)
-
-    if "booking_bool" in x_test:
-        x_test.drop(["booking_bool"], axis=1, inplace=True)
+    if "target_score" in x_test:
+        x_test.drop(["target_score"], axis=1, inplace=True)
 
     print("Predicting...")
     result = model.predict(x_test)

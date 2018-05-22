@@ -4,8 +4,7 @@ from pyltr.metrics import NDCG
 
 def calculate_ndcg(truth, prediction):
     print("Calculating score...")
-    return NDCG().calc_mean(truth["srch_id"].values, (truth["booking_bool"] + truth["click_bool"]).values,
-                     prediction["result"].values)
+    return NDCG().calc_mean(truth["srch_id"].values, truth["target_score"].values, prediction["result"].values)
 
 
 if __name__ == '__main__':
