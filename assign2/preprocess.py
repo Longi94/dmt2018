@@ -40,7 +40,7 @@ def preprocess(df, is_test):
     print("Filling orig_destination_distance...")
     df['orig_destination_distance'].fillna(-1, inplace=True)
 
-    fill_comps(df)
+    drop_comp(df)
 
     create_price_order(df)
 
@@ -61,8 +61,20 @@ def preprocess(df, is_test):
     print(df.info())
 
 
-def fill_comps(df):
+def drop_comp(df):
+    print("Creating comp...")
     # fill in competitor values with 0 (no difference with competitors)
+
+    # df["comp"] = 0
+    #
+    # df.loc[(df['comp1_rate'] == -1) | (df['comp2_rate'] == -1) | (df['comp3_rate'] == -1) | (df['comp4_rate'] == -1) |
+    #        (df['comp5_rate'] == -1) | (df['comp6_rate'] == -1) | (df['comp7_rate'] == -1) | (df['comp8_rate'] == -1),
+    #        "comp"] = 1
+    #
+    # df.loc[(df['comp1_inv'] == 0) | (df['comp2_inv'] == 0) | (df['comp3_inv'] == 0) | (df['comp4_inv'] == 0) |
+    #        (df['comp5_inv'] == 0) | (df['comp6_inv'] == 0) | (df['comp7_inv'] == 0) | (df['comp8_inv'] == 0),
+    #        "comp"] += 1
+
     for i in range(1, 9):
         rate_col = 'comp' + str(i) + '_rate'
         inv_col = 'comp' + str(i) + '_inv'
@@ -74,8 +86,8 @@ def fill_comps(df):
         print("Dropping " + inv_col + "...")
         df.drop(inv_col, axis=1, inplace=True)
 
-        print("Filling " + rate_percent_diff_col + "...")
-        df[rate_percent_diff_col].fillna(0, inplace=True)
+        print("Dropping " + rate_percent_diff_col + "...")
+        df.drop(rate_percent_diff_col, axis=1, inplace=True)
 
 
 def create_price_order(df):
