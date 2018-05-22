@@ -1,5 +1,6 @@
 import pandas as pd
 
+from sklearn.utils import resample
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
 from pyltr.models.lambdamart import LambdaMART
@@ -9,10 +10,11 @@ GBM_ENSEMBLE = 1
 
 
 def train(df_train, model_type):
+    df_balanced = balance_data(df_train)
     if model_type == LAMBDA_MART:
-        model = train_lambda_mart(df_train)
+        model = train_lambda_mart(df_balanced)
     elif model_type == GBM_ENSEMBLE:
-        model = train_gbm_ensemble(df_train)
+        model = train_gbm_ensemble(df_balanced)
     else:
         print("Unknown model type: " + str(model_type))
         return
@@ -54,6 +56,25 @@ def print_feature_importances(x_train, model):
     features.sort(key=lambda x: x[1], reverse=True)
     for feature in features:
         print(feature)
+
+
+def balance_data(df):
+    print("Balancing data...")
+    # Separate majority and minority classes
+    n_upsample = df.loc[df['click_bool'] == 0].shape[0]
+    df_majority = df.loc[df['click_bool'] == 0]
+    df_minority = df.loc[df['click_bool'] == 1]
+
+    # Upsample minority class
+    df_minority_upsampled = resample(df_minority,
+                                     replace=True,  # sample with replacement
+                                     n_samples=n_upsample,  # to match majority class
+                                     random_state=123)  # reproducible results
+
+    # Combine majority class with upsampled minority class
+    balanced = pd.concat([df_majority, df_minority_upsampled])
+    balanced.sort_values(by='srch_id', inplace=True)
+    return balanced
 
 
 if __name__ == '__main__':

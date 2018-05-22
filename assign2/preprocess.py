@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 pd.set_option('display.width', 1000)
 
@@ -11,7 +12,7 @@ def preprocess(df, is_test):
 
     # drop useless columns
     print("Dropping columns...")
-    df.drop(['date_time', 'site_id'], axis=1, inplace=True)
+    df.drop(['date_time', 'site_id', 'prop_brand_bool'], axis=1, inplace=True)
     if not is_test:
         df.drop(['gross_bookings_usd', 'position'], axis=1, inplace=True)
 
@@ -41,6 +42,12 @@ def preprocess(df, is_test):
 
     fill_comps(df)
 
+    create_price_order(df)
+
+    normalize(df, "price_usd")
+    normalize(df, "prop_location_score2")
+    normalize(df, "prop_location_score1")
+
     df.sort_values(by='srch_id', inplace=True)
 
     print('-' * 80)
@@ -66,6 +73,28 @@ def fill_comps(df):
 
         print("Filling " + rate_percent_diff_col + "...")
         df[rate_percent_diff_col].fillna(0, inplace=True)
+
+
+def create_price_order(df):
+    print("Creating price_order...")
+    df["price_order"] = -1
+
+    df.sort_values(["srch_id", "price_usd"], inplace=True, ascending=[True, True])
+
+    i = 0
+    curr_id = -1
+    for index, row in df.iterrows():
+        if row["srch_id"] != curr_id:
+            curr_id = row["srch_id"]
+            i = 0
+
+        df.at[index, "price_order"] = i
+        i += 1
+
+
+def normalize(df, column_name):
+    print("Normalizing " + column_name + "...")
+    df[column_name] = (df[column_name] - df[column_name].mean()) / df[column_name].std()
 
 
 if __name__ == '__main__':
