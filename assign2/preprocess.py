@@ -1,7 +1,9 @@
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import LabelEncoder
 
 pd.set_option('display.width', 1000)
+label = LabelEncoder()
 
 
 def preprocess(df, is_test):
@@ -12,7 +14,9 @@ def preprocess(df, is_test):
 
     # drop useless columns
     print("Dropping columns...")
-    df.drop(['date_time', 'site_id', 'prop_brand_bool'], axis=1, inplace=True)
+    df.drop(['date_time', 'site_id', 'prop_brand_bool', 'random_bool', 'srch_booking_window', 'srch_destination_id',
+             'prop_country_id', 'visitor_location_country_id', 'srch_saturday_night_bool', 'srch_room_count'], axis=1,
+            inplace=True)
     if not is_test:
         df.drop(['gross_bookings_usd', 'position'], axis=1, inplace=True)
 
@@ -36,17 +40,22 @@ def preprocess(df, is_test):
     print("Filling srch_query_affinity_score...")
     df['srch_query_affinity_score'].fillna(0, inplace=True)
 
-    # don't know distance, users like to know the distance
+    # don't know distance, users like to know the distance, fill in with "far away"
     print("Filling orig_destination_distance...")
-    df['orig_destination_distance'].fillna(-1, inplace=True)
+    normalize_distance(df)
+    df['orig_destination_distance'].fillna(2, inplace=True)
 
     drop_comp(df)
 
     create_price_order(df)
+    #
+    # normalize(df, "price_usd")
+    # normalize(df, "prop_location_score2")
+    # normalize(df, "prop_location_score1")
 
-    normalize(df, "price_usd")
-    normalize(df, "prop_location_score2")
-    normalize(df, "prop_location_score1")
+    band(df, "price_usd", 5)
+
+    create_is_alone(df)
 
     if not is_test:
         create_target_score(df)
@@ -65,15 +74,17 @@ def drop_comp(df):
     print("Creating comp...")
     # fill in competitor values with 0 (no difference with competitors)
 
-    # df["comp"] = 0
-    #
-    # df.loc[(df['comp1_rate'] == -1) | (df['comp2_rate'] == -1) | (df['comp3_rate'] == -1) | (df['comp4_rate'] == -1) |
-    #        (df['comp5_rate'] == -1) | (df['comp6_rate'] == -1) | (df['comp7_rate'] == -1) | (df['comp8_rate'] == -1),
-    #        "comp"] = 1
-    #
-    # df.loc[(df['comp1_inv'] == 0) | (df['comp2_inv'] == 0) | (df['comp3_inv'] == 0) | (df['comp4_inv'] == 0) |
-    #        (df['comp5_inv'] == 0) | (df['comp6_inv'] == 0) | (df['comp7_inv'] == 0) | (df['comp8_inv'] == 0),
-    #        "comp"] += 1
+    df["comp"] = 0
+
+    df.loc[((df['comp1_rate'] == -1) & (df['comp1_inv'] == 0)) |
+           ((df['comp2_rate'] == -1) & (df['comp1_inv'] == 0)) |
+           ((df['comp3_rate'] == -1) & (df['comp1_inv'] == 0)) |
+           ((df['comp4_rate'] == -1) & (df['comp1_inv'] == 0)) |
+           ((df['comp5_rate'] == -1) & (df['comp1_inv'] == 0)) |
+           ((df['comp6_rate'] == -1) & (df['comp1_inv'] == 0)) |
+           ((df['comp7_rate'] == -1) & (df['comp1_inv'] == 0)) |
+           ((df['comp8_rate'] == -1) & (df['comp1_inv'] == 0)),
+           "comp"] = 1
 
     for i in range(1, 9):
         rate_col = 'comp' + str(i) + '_rate'
@@ -119,6 +130,28 @@ def create_target_score(df):
     df.loc[df["booking_bool"] == 1, "target_score"] = 5
 
     df.drop(["click_bool", "booking_bool"], axis=1, inplace=True)
+
+
+def band(df, column, count):
+    band_column = column + "_band"
+    df[band_column] = pd.qcut(df[column], count)
+    df[column] = label.fit_transform(df[band_column])
+    df.drop([band_column], axis=1, inplace=True)
+
+
+def normalize_distance(df):
+    print("Normalizing orig_destination_distance...")
+    for srch_id in df.loc[df["orig_destination_distance"].notnull(), "srch_id"].unique():
+        mean = df.loc[df["srch_id"] == srch_id, "orig_destination_distance"].mean()
+        std = df.loc[df["srch_id"] == srch_id, "orig_destination_distance"].std()
+        df.loc[df["srch_id"] == srch_id, "orig_destination_distance"] = (df["orig_destination_distance"] - mean) / std
+
+
+def create_is_alone(df):
+    print("Creating is_alone...")
+    df["is_alone"] = 0
+    df.loc[(df["srch_children_count"] + df["srch_adults_count"]) == 1, "is_alone"] = 1
+    df.drop(["srch_children_count", "srch_adults_count"], axis=1, inplace=True)
 
 
 if __name__ == '__main__':
