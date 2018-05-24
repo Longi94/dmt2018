@@ -52,6 +52,8 @@ def preprocess(df, is_test):
     # normalize(df, "price_usd")
     # normalize(df, "prop_location_score2")
     # normalize(df, "prop_location_score1")
+	
+    create_loc_rank(df)
 
     band(df, "price_usd", 5)
 
@@ -100,6 +102,10 @@ def drop_comp(df):
         print("Dropping " + rate_percent_diff_col + "...")
         df.drop(rate_percent_diff_col, axis=1, inplace=True)
 
+
+def create_loc_rank(df):
+    print("creating location rank")
+    df["loc_rank"] = (df["prop_location_score1"]+df["prop_location_score2"])/(df["price_order"]+1)
 
 def create_price_order(df):
     print("Creating price_order...")
