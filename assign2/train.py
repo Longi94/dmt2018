@@ -10,7 +10,8 @@ GBM_ENSEMBLE = 1
 
 
 def train(df_train, model_type):
-    df_balanced = balance_data(df_train)
+    #df_balanced = balance_data(df_train)
+    df_balanced = df_train
     if model_type == LAMBDA_MART:
         model = train_lambda_mart(df_balanced)
     elif model_type == GBM_ENSEMBLE:
