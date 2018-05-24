@@ -28,7 +28,7 @@ def train_lambda_mart(df_train):
     query_ids = df_train["srch_id"].copy()
 
     print("Fitting LambdaMART...")
-    model = LambdaMART(n_estimators=100, verbose=1)
+    model = LambdaMART(n_estimators=150, verbose=1)
     model.fit(x_train, y_train, query_ids)
 
     print_feature_importances(x_train, model)
