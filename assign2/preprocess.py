@@ -14,7 +14,7 @@ def preprocess(df, is_test):
 
     # drop useless columns
     print("Dropping columns...")
-    df.drop(['date_time', 'site_id', 'prop_brand_bool', 'random_bool', 'srch_booking_window', 'srch_destination_id',
+    df.drop(['date_time', 'site_id', 'prop_brand_bool', 'random_bool', 'srch_destination_id',
              'prop_country_id', 'visitor_location_country_id', 'srch_saturday_night_bool', 'srch_room_count'], axis=1,
             inplace=True)
     if not is_test:
@@ -52,8 +52,24 @@ def preprocess(df, is_test):
     # normalize(df, "price_usd")
     # normalize(df, "prop_location_score2")
     # normalize(df, "prop_location_score1")
-	
+
+    create_price_range(df)
+
+    create_quality_star(df)
+
+    create_quality_price(df)
+
+    create_hurry(df)
+
+    create_price_diff(df)
+
     create_loc_rank(df)
+
+    create_price_diff_trend(df)
+
+    create_price_hurry(df)
+
+    create_price_behavior(df)
 
     band(df, "price_usd", 5)
 
@@ -102,10 +118,48 @@ def drop_comp(df):
         print("Dropping " + rate_percent_diff_col + "...")
         df.drop(rate_percent_diff_col, axis=1, inplace=True)
 
+def create_price_diff(df):
+    print("creating price diff")
+    df['price_diff'] = 0
+    df['price_diff'] = np.abs(np.log(df['price_usd'] + 1) - df['prop_log_historical_price'])
+
+
+def create_quality_star(df):
+    print("creating quality star ratio")
+    df['quality_star'] = 0.
+    df['quality_star'] = (df['prop_review_score']+1)/(df['prop_starrating']+1)
+
+def create_quality_price(df):
+    print("creating quality price ratio")
+    df['quality_price'] = 0.
+    df['quality_price'] = (df['prop_review_score']+1)/(df['price_range']+1)
+
+def create_price_range(df):
+    print("creating price range")
+    df['price_range'] = (df['price_usd']+(200 - df['price_usd']%200))/200
+
+def create_hurry(df):
+    print("creating hurry")
+    df["hurry"] = 0.
+    df['hurry'] = (df['srch_query_affinity_score']+1)/(np.log(df['srch_booking_window']+1)+1)
+
+def create_price_diff_trend(df):
+    print("Creating price diff trend")
+    df["diff_trend"] = 0
+    df['diff_trend'] = np.sign(np.log(df['price_usd'] + 1) - df['prop_log_historical_price'])
+
+def create_price_behavior(df):
+    print("creating price behavior")
+    df["price_behavior"] = 0
+    df["price_behavior"] = (df["diff_trend"]*df["price_hurry"])
 
 def create_loc_rank(df):
     print("creating location rank")
-    df["loc_rank"] = (df["prop_location_score1"]+df["prop_location_score2"])/(df["price_order"]+1)
+    df["loc_rank"] = (df["prop_location_score1"]+df["prop_location_score2"]*3)/(df["price_order"]+1)
+
+def create_price_hurry(df):
+    print("creating price hurry")
+    df['price_hurry'] = df["price_diff"]/(df['srch_booking_window']+1)
 
 def create_price_order(df):
     print("Creating price_order...")

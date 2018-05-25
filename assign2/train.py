@@ -10,11 +10,11 @@ GBM_ENSEMBLE = 1
 
 
 def train(df_train, model_type):
-    df_balanced = balance_data(df_train)
+    #df_balanced = balance_data(df_train)
     if model_type == LAMBDA_MART:
-        model = train_lambda_mart(df_balanced)
+        model = train_lambda_mart(df_train)
     elif model_type == GBM_ENSEMBLE:
-        model = train_gbm_ensemble(df_balanced)
+        model = train_gbm_ensemble(df_train)
     else:
         print("Unknown model type: " + str(model_type))
         return
@@ -28,7 +28,7 @@ def train_lambda_mart(df_train):
     query_ids = df_train["srch_id"].copy()
 
     print("Fitting LambdaMART...")
-    model = LambdaMART(n_estimators=150, verbose=1)
+    model = LambdaMART(n_estimators=200, verbose=1)
     model.fit(x_train, y_train, query_ids)
 
     print_feature_importances(x_train, model)
@@ -41,7 +41,7 @@ def train_gbm_ensemble(df_train):
     y_train = df_train["target_score"]
 
     print("Fitting GradientBoostingClassifier...")
-    model = GradientBoostingRegressor(n_estimators=100, verbose=1)
+    model = GradientBoostingRegressor(n_estimators=200, verbose=1)
     model.fit(x_train, y_train)
 
     print_feature_importances(x_train, model)
@@ -66,13 +66,13 @@ def balance_data(df):
     df_minority = df.loc[df['target_score'] > 0]
 
     # Upsample minority class
-    df_minority_upsampled = resample(df_minority,
+    df_majority_downsampled = resample(df_majority,
                                      replace=True,  # sample with replacement
-                                     n_samples=n_upsample,  # to match majority class
+                                     n_samples=2*n_upsample,  # to match majority class
                                      random_state=123)  # reproducible results
 
     # Combine majority class with upsampled minority class
-    balanced = pd.concat([df_majority, df_minority_upsampled])
+    balanced = pd.concat([df_minority, df_majority_downsampled])
     balanced.sort_values(by='srch_id', inplace=True)
     return balanced
 
