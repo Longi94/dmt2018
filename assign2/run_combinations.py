@@ -31,7 +31,10 @@ keep = [
     "prop_location_score1",
     "prop_location_score2",
     "prop_starrating",
-    "prop_review_score"
+    "prop_review_score",
+    "promotion_flag",
+    "quality_price",
+    "price_diff"
 ]
 
 columns = df_train.columns.tolist()
