@@ -227,7 +227,6 @@ def band(df, column, count):
     df[column] = label.fit_transform(df[band_column])
     df.drop([band_column], axis=1, inplace=True)
 
-
 def normalize_distance(df):
     print("Normalizing orig_destination_distance...")
     non_null = df.loc[df["orig_destination_distance"].notnull()]
