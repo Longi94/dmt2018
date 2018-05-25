@@ -26,10 +26,24 @@ df_train = pd.read_csv(in_train_file)
 print("Reading " + in_test_file + "...")
 df_test = pd.read_csv(in_test_file)
 
+keep = [
+    "price_order",
+    "prop_location_score1",
+    "prop_location_score2",
+    "prop_starrating",
+    "prop_review_score",
+    "promotion_flag",
+    "quality_price",
+    "price_diff"
+]
+
 columns = df_train.columns.tolist()
 columns.remove("srch_id")
 columns.remove("prop_id")
 columns.remove("target_score")
+
+for keep_column in keep:
+    columns.remove(keep_column)
 
 results = []
 
@@ -37,11 +51,12 @@ for L in range(len(columns) - 3, len(columns) + 1):
     i = 0
     subsets = ncr(len(columns), L)
     for subset in itertools.combinations(columns, L):
+        column_list = list(subset) + keep
         i += 1
         print("Length: {}, Subset {}/{}".format(L, i, subsets))
         print(subset)
-        sub_df_train = df_train[list(subset) + ["srch_id", "prop_id", "target_score"]]
-        sub_df_test = df_test[list(subset)]
+        sub_df_train = df_train[column_list + ["srch_id", "prop_id", "target_score"]]
+        sub_df_test = df_test[column_list]
         model = train(sub_df_train, 1)
 
         df_prediction = pd.DataFrame({
