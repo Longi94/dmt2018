@@ -46,14 +46,18 @@ def preprocess(df, is_test):
 
     create_price_order(df)
 
+    df['is_alone'] = np.logical_and(df['srch_adults_count']==1, df['srch_children_count']==0)
 
     df['price_diff'] = np.abs(np.log(df['price_usd'] + 1) - df['prop_log_historical_price'])
-    #
+
+    #df['square_price_diff_window'] = (np.abs(np.log(df['price_usd'] + 1) - df['prop_log_historical_price']))*(df["srch_booking_window"]*(df["srch_booking_window"]+1))
     # normalize(df, "price_usd")
     # normalize(df, "prop_location_score2")
     # normalize(df, "prop_location_score1")
 
     create_loc_rank(df)
+
+    #create_loc_rank_children(df)
 
     create_price_diff_trend(df)
 
@@ -174,6 +178,10 @@ def create_price_hurry(df):
 def create_loc_rank(df):
     print("creating location rank")
     df["loc_rank"] = (df["prop_location_score1"] + df["prop_location_score2"]) / (df["price_order"] + 1)
+
+def create_loc_rank_children(df):
+    print("creating location rank children")
+    df["loc_rank_children"] = (df["loc_rank"]*df["srch_children_count"])
 
 
 def remove_price_usd_outliers(df):
