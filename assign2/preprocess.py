@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
+from pyltr.util.group import get_groups
 
 pd.set_option('display.width', 1000)
 label = LabelEncoder()
@@ -229,10 +230,15 @@ def band(df, column, count):
 
 def normalize_distance(df):
     print("Normalizing orig_destination_distance...")
-    for srch_id in df.loc[df["orig_destination_distance"].notnull(), "srch_id"].unique():
-        mean = df.loc[df["srch_id"] == srch_id, "orig_destination_distance"].mean()
-        std = df.loc[df["srch_id"] == srch_id, "orig_destination_distance"].std()
-        df.loc[df["srch_id"] == srch_id, "orig_destination_distance"] = (df["orig_destination_distance"] - mean) / std
+    non_null = df.loc[df["orig_destination_distance"].notnull()]
+
+    distances = non_null["orig_destination_distance"].copy()
+    for srch_id, a, b in get_groups(non_null["srch_id"].values):
+        mean = np.mean(distances[a:b])
+        std = pd.DataFrame(distances[a:b]).std()[0]
+        distances[a:b] = (distances[a:b] - mean) / std
+
+    df.loc[df["orig_destination_distance"].notnull(), "orig_destination_distance"] = distances
 
 
 def create_is_alone(df):
