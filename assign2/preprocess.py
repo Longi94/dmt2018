@@ -12,13 +12,10 @@ def preprocess(df, is_test):
     print('Nan count:')
     print(df.isnull().sum())
 
-    # drop useless columns
-    print("Dropping columns...")
-    df.drop(['date_time', 'site_id', 'prop_brand_bool', 'random_bool', 'srch_destination_id',
-             'prop_country_id', 'visitor_location_country_id', 'srch_saturday_night_bool', 'srch_room_count'], axis=1,
-            inplace=True)
     if not is_test:
         df.drop(['gross_bookings_usd', 'position'], axis=1, inplace=True)
+
+    remove_price_usd_outliers(df)
 
     # fill missing review score with 0 (no information available)
     print("Filling prop_review_score...")
@@ -48,20 +45,13 @@ def preprocess(df, is_test):
     drop_comp(df)
 
     create_price_order(df)
+
+
+    df['price_diff'] = np.abs(np.log(df['price_usd'] + 1) - df['prop_log_historical_price'])
     #
     # normalize(df, "price_usd")
     # normalize(df, "prop_location_score2")
     # normalize(df, "prop_location_score1")
-
-    create_price_range(df)
-
-    create_quality_star(df)
-
-    create_quality_price(df)
-
-    create_hurry(df)
-
-    create_price_diff(df)
 
     create_loc_rank(df)
 
@@ -73,10 +63,39 @@ def preprocess(df, is_test):
 
     band(df, "price_usd", 5)
 
-    create_is_alone(df)
+    df['quality_pricestar_ratio'] = df['prop_review_score'] / (df['price_usd'] + df['prop_starrating'] + 1)
+    df['quality_price'] = df['prop_review_score'] / (df['price_usd'] + 1)
+    df['quality_star'] = (df['prop_review_score'] + 1) / (df['prop_starrating'] + 1)
+
+    df['hurry'] = (df['srch_query_affinity_score'] + 1) / (np.log(df['srch_booking_window'] + 1) + 1)
+
+    # create_is_alone(df)
 
     if not is_test:
         create_target_score(df)
+
+    # drop useless columns
+    print("Dropping columns...")
+    df.drop(['date_time',
+             'site_id',
+             'prop_brand_bool',
+             'random_bool',
+             'srch_booking_window',
+             'srch_destination_id',
+             'prop_country_id',
+             'visitor_location_country_id',
+             'srch_saturday_night_bool',
+             'srch_room_count',
+             'srch_adults_count',
+             'srch_children_count',
+             "prop_log_historical_price",
+             "quality_pricestar_ratio",
+             "quality_star",
+             "srch_length_of_stay",
+             "srch_query_affinity_score",
+             "visitor_hist_adr_usd",
+             "comp"], axis=1,
+            inplace=True)
 
     df.sort_values(by='srch_id', inplace=True)
 
@@ -153,13 +172,21 @@ def create_price_behavior(df):
     df["price_behavior"] = 0
     df["price_behavior"] = (df["diff_trend"]*df["price_hurry"])
 
-def create_loc_rank(df):
-    print("creating location rank")
-    df["loc_rank"] = (df["prop_location_score1"]+df["prop_location_score2"]*3)/(df["price_order"]+1)
 
 def create_price_hurry(df):
     print("creating price hurry")
+    df["price_hurry"] = 0
     df['price_hurry'] = df["price_diff"]/(df['srch_booking_window']+1)
+
+def create_loc_rank(df):
+    print("creating location rank")
+    df["loc_rank"] = (df["prop_location_score1"] + df["prop_location_score2"]) / (df["price_order"] + 1)
+
+
+def remove_price_usd_outliers(df):
+    q = df["price_usd"].quantile(0.98)
+    df.drop(df[df["price_usd"] > q].index, inplace=True)
+
 
 def create_price_order(df):
     print("Creating price_order...")

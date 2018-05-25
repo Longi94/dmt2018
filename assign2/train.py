@@ -11,6 +11,7 @@ GBM_ENSEMBLE = 1
 
 def train(df_train, model_type):
     #df_balanced = balance_data(df_train)
+    df_balanced = df_train
     if model_type == LAMBDA_MART:
         model = train_lambda_mart(df_train)
     elif model_type == GBM_ENSEMBLE:
@@ -28,7 +29,7 @@ def train_lambda_mart(df_train):
     query_ids = df_train["srch_id"].copy()
 
     print("Fitting LambdaMART...")
-    model = LambdaMART(n_estimators=200, verbose=1)
+    model = LambdaMART(n_estimators=100, verbose=1)
     model.fit(x_train, y_train, query_ids)
 
     print_feature_importances(x_train, model)
@@ -41,7 +42,7 @@ def train_gbm_ensemble(df_train):
     y_train = df_train["target_score"]
 
     print("Fitting GradientBoostingClassifier...")
-    model = GradientBoostingRegressor(n_estimators=200, verbose=1)
+    model = GradientBoostingRegressor(n_estimators=100, verbose=1)
     model.fit(x_train, y_train)
 
     print_feature_importances(x_train, model)
