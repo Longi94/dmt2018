@@ -142,7 +142,13 @@ def create_price_order(df):
 
     i = 0
     curr_id = -1
+    count = len(df)
+    last_progress = time.time()
     for index, row in df.iterrows():
+        current_time = time.time()
+        if current_time - last_progress > 1:
+            last_progress = current_time
+            print_progress(index, count)
         if row["srch_id"] != curr_id:
             curr_id = row["srch_id"]
             i = 0
@@ -177,7 +183,13 @@ def normalize_distance(df):
     non_null = df.loc[df["orig_destination_distance"].notnull()]
 
     distances = non_null["orig_destination_distance"].copy()
+    count = len(non_null)
+    last_progress = time.time()
     for srch_id, a, b in get_groups(non_null["srch_id"].values):
+        current_time = time.time()
+        if current_time - last_progress > 1:
+            last_progress = current_time
+            print_progress(a, count)
         mean = np.mean(distances[a:b])
         std = pd.DataFrame(distances[a:b]).std()[0]
         distances[a:b] = (distances[a:b] - mean) / std
@@ -190,6 +202,17 @@ def create_is_alone(df):
     df["is_alone"] = 0
     df.loc[(df["srch_children_count"] + df["srch_adults_count"]) == 1, "is_alone"] = 1
     df.drop(["srch_children_count", "srch_adults_count"], axis=1, inplace=True)
+
+
+def print_progress(a, b):
+    restart_line()
+    sys.stdout.write(str(a) + "/" + str(b))
+    sys.stdout.flush()
+
+
+def restart_line():
+    sys.stdout.write('\r')
+    sys.stdout.flush()
 
 
 if __name__ == '__main__':
