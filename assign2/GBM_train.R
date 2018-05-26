@@ -1,12 +1,11 @@
 require(gbm)
 
-data = read.csv("data/train/train_set.csv", header = TRUE)
-test = read.csv("data/train/test_set.csv", header = TRUE)
+data = read.csv("data/validation/balanced_train_set.csv", header = TRUE)
 
 detach(data)
 attach(data)
 
-model = gbm(
+gbm_model_full = gbm(
   formula = target_score ~
     #visitor_hist_adr_usd +
     prop_starrating +
@@ -27,7 +26,10 @@ model = gbm(
     quality_price +
     quality_pricestar_ratio +
     quality_star +
-    price_diff,
+    price_diff +
+    price_behavior +
+    price_hurry,
+  #diff_trend,
   data = data,
   distribution = list(
     name = 'pairwise',
@@ -37,17 +39,18 @@ model = gbm(
   n.trees=5000,        # number of trees
   shrinkage=0.005,     # learning rate
   interaction.depth=3, # number per splits per tree
-  cv.folds=3,          # number of cross validation folds
+  #cv.folds=3,          # number of cross validation folds
   verbose = TRUE,
   n.cores = 2
 )
 
-n_trees = gbm.perf(model, method='cv')
+#n_trees = gbm.perf(model, method='cv')
 
-result = predict(model, test, n_trees)
+test = read.csv("data/validation/test_set.csv", header = TRUE)
+result = predict(gbm_model_full, test, n.trees = 5000)
 
 result_table = data.frame(test[, c("srch_id", "prop_id")], result)
 names(result_table) <- c("SearchId", "PropId", "result")
-write.csv(result_table, "data/train/test_predictions.csv")
+write.csv(result_table, "data/validation/test_predictions.csv")
 
-summary(model)
+summary(gbm_model_full)

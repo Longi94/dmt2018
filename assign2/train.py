@@ -4,6 +4,7 @@ from sklearn.utils import resample
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
 from pyltr.models.lambdamart import LambdaMART
+from pyltr.metrics import NDCG
 
 LAMBDA_MART = 0
 GBM_ENSEMBLE = 1
@@ -29,7 +30,7 @@ def train_lambda_mart(df_train):
     query_ids = df_train["srch_id"].copy()
 
     print("Fitting LambdaMART...")
-    model = LambdaMART(n_estimators=100, verbose=1)
+    model = LambdaMART(metric=NDCG(len(df_train)), n_estimators=100, verbose=1)
     model.fit(x_train, y_train, query_ids)
 
     print_feature_importances(x_train, model)
