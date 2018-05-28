@@ -15,8 +15,7 @@ def preprocess(df, is_test):
 
     if not is_test:
         df.drop(['gross_bookings_usd', 'position'], axis=1, inplace=True)
-
-    remove_price_usd_outliers(df)
+        remove_price_usd_outliers(df)
 
     # fill missing review score with 0 (no information available)
     print("Filling prop_review_score...")
